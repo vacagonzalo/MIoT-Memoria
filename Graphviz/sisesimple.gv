@@ -1,0 +1,4 @@
+digraph G {
+    "Consola" -> "Motor de ensayos" ->"Puerto" ->"DUT";
+    "DUT" -> "Puerto" -> "Motor de ensayos" -> "Consola";
+}

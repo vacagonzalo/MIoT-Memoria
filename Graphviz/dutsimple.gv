@@ -1,0 +1,4 @@
+digraph G {
+    "Periféricos" -> "Generador de reportes" -> "Periféricos";
+    Puerto -> "Generador de reportes" -> Puerto;
+}
