@@ -1,0 +1,14 @@
+digraph G {
+	subgraph cluster_0 {
+		Consola -> "Servidor OCD" -> Consola;
+		label = "PC usuario";
+	}
+
+	subgraph cluster_1 {
+		"ARM Core" -> DAP -> "ARM Core";
+		label = "DUT";
+	}
+
+    DAP -> Sonda -> DAP;
+    "Servidor OCD" -> Sonda -> "Servidor OCD";
+}

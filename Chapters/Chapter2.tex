@@ -2,201 +2,201 @@
 
 \label{Chapter2}
 
-%----------------------------------------------------------------------------------------
-%	SECTION 1
-%----------------------------------------------------------------------------------------
-Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
+\section{Arquitectura del dispositivo bajo prueba}
+\label{sec:dut}
 
-\section{Estilo y convenciones}
-\label{sec:ejemplo}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/Cortex-M4.png}
+    \caption{Diagrama de la arquitectura Cortex M4\citep{WEBSITE:cortexm}.}
+	\label{fig:cortexm}
+\end{figure}
 
-\subsection{Uso de mayúscula inicial para los título de secciones}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/coresight.png}
+    \caption{Diagrama de la arquitectura Cortex M4\citep{WEBSITE:coresight}.}
+	\label{fig:coresight}
+\end{figure}
 
-Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
+\section{Servidores y sondas de depuración}
+\label{sec:depuracion}
 
-Cuando se quiere poner una lista tabulada, se hace así:
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/debug.pdf}
+    \caption{Conexión de una sesión de depuración.}
+	\label{fig:debug}
+\end{figure}
 
-\begin{itemize}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{itemize}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/segger.jpg}
+    \caption{Sonda de depuración \emph{Segger J-32}.}
+	\label{fig:sonda}
+\end{figure}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
+\begin{table}[h]
+	\centering
+	\caption[Servidores de depuración]{Comparación entre servidores de depuración}
+	\begin{tabular}{l c c}    
+		\toprule
+        \textbf{Periférico} & \textbf{Validación}       & \textbf{Detección en un ciclo}\\
+		\midrule
+		CAN                 & Loopback interno          & Si\\		
+		PIO                 & Loopback externo          & No\\
+		SPI                 & Loopback externo          & Si\\
+		UART                & Lógica en firmware        & No\\
+		Watchdog            & Lógica en firmware        & No\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:perifericos}
+\end{table}
 
-Si se desea poner una lista numerada el formato es este:
+\section{Periféricos de interés}
+\label{sec:perifericos}
+
+\section{Requerimientos del cliente}
+\label{sec:emphuerimientos}
+
+El software aquí especificado brindará las siguientes funcionalidades:
 
 \begin{enumerate}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
+	\item Referentes al CCI:
+		\begin{enumerate}
+			\item Generará de una interfaz de usuario.
+			\item Permitirá configurar el ensayo a realizar.
+			\item Activará el Proceso de DUT.
+			\item Observará la salida del DUT.
+			\item Inyectará SEFI-SEU en el DUT.
+			\item Persistirá las operaciones, entradas y salidas.
+			\item Generará informes del ensayo realizado.
+		\end{enumerate}
+	\item Referentes al Proceso de DUT:
+		\begin{enumerate}
+			\item Verificará el estado de los periféricos del DUT.
+			\item Detectará si el DUT perdió su secuencia.
+			\item Generará reportes de estado de periféricos y secuencia.
+			\item Permitirá que CCI configure el alcance de la secuencia.
+			\item Permitirá que CCI maneje el flujo de su secuencia.
+		\end{enumerate}
 \end{enumerate}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
+Las restricciones del desarrollo del sistema son las siguientes:
 
-\subsection{Este es el título de una subsección}
-\label{subsec:ejemplo}
+\begin{itemize}
+	\item Utilización de repositorio con control de versiones \emph{Gitlab}.
+	\item Documentación del código con \emph{Doxygen}.
+	\item Utilización exclusiva del lenguaje de programación \emph{Python 3}.
+\end{itemize}
 
-Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
+Los requerimientos de las interfaces externas son las siguientes:
 
-La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
+\begin{enumerate}
+	\item CCI:
+		\begin{enumerate}
+			\item Módulo para el usuario:
+				\begin{itemize}
+					\item \emph{001} deberá representar todos los caracteres de ISO Std. 10646.
+					\item \emph{002} cumplirá con las secuencias de escape especificadas en ISO Std. 6429.
+					\item \emph{003} usará el castellano como idioma conforme a la Real Academia Española.
+					\item \emph{004} se aceptarán barbarismos que conformen la interfaz con los sistemas UNIX.
+					\item \emph{005} no deberá producir destellos ni cambios bruscos en su intensidad lumínica.
+					\item \emph{006} no deberá producir sonidos
+					\item Títulos:
+						\begin{itemize}
+							\item \emph{007} los títulos deberán tener una longitud máxima de 30 caracteres.
+							\item \emph{008} los títulos deberán estar correctamente capitalizados.
+							\item \emph{009} los títulos deberán ser únicos.
+						\end{itemize}
+					\item Comandos:
+						\begin{itemize}
+							\item \emph{010} el sistema se iniciará con el comando \texttt{sise.py}.
+							\item \emph{011} el sistema imprimirá en pantalla un manual de ayuda con el comando \texttt{sise --help}.
+							\item \emph{012} se podrá exportar la configuración del último ensayo realizado con el comando \texttt{sise --export=Ruta}.
+							\item \emph{013} se podrá importar la configuración de un ensayo a realizar con el comando \texttt{sise --import=Ruta/Archivo}.
+						\end{itemize}
+					\item Menú:
+						\begin{itemize}
+							\item \emph{014} el sistema de menú tendrá una arquitectura de árbol.
+							\item \emph{015} la navegación entre los nodos del menú será consistente en todo el árbol.
+							\item \emph{016} se indicará en todo momento el nodo actual y todos los nodos que lleven a la raíz del árbol.
+						\end{itemize}
+				\end{itemize}
+			\item Con DUT:
+				\begin{itemize}
+					\item \emph{017} la comunicación con UART será en 9600 baudios, 8 bits de datos, 1 bit de parada y 0 bits de paridad.
+					\item \emph{018} la comunicación con el debugger conformará con la configuración recomendada por el fabricante.
+				\end{itemize}
+		\end{enumerate}
+	\item Proceso de DUT:
+		\begin{itemize}
+			\item \emph{019} la comunicación con el debugger estará disponible durante todo el flujo de la secuencia.
+			\item \emph{020} durante el flujo de la secuencia, la UART solo podrá transmitir información.
+			\item \emph{021} en el periodo entre secuencias, la UART podrá recibir y transmitir información.
+		\end{itemize}
+\end{enumerate}
 
-El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
+Las funciones deben cumplir lo siguiente:
 
-En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
+\begin{enumerate}
+	\item CCI:
+		\begin{itemize}
+			\item \emph{022} detendrá la secuencia de duración $ T $ del DUT en un momento $ t $ definido como $ t \, \epsilon \, \rm I\!R^+ \wedge t \, < T$.
+			\item \emph{023} con la secuencia del DUT detenida, inyectará un SEFI-SEU que invertirá el valor de un bit de un registro interno.
+			\item \emph{024} La descripción del ensayo definirá el momento $ t $ de inyección de SEFI-SEU durante la secuencia de duración $ T $ y será un múltiplo de $\Delta t$ definido como $ \Delta t=T/N \, \forall \, N \epsilon \, \rm I\!N $.
+			\item \emph{025} La descripción del ensayo definirá la cantidad $ M $ de registros involucrados en la prueba.
+			\item \emph{026} La cantidad de secuencias $ L $ a ejecutar quedará definida como \\$ L = N \times M $.
+			\item \emph{027} Se ejecutará una secuencia de control sin inyección de SEFI-SEU antes de correr las $ L $ secuencias.
+			\item \emph{028} Por cada ejecución de una secuencia se obtendrá un valor de salida $ S $ del DUT.
+			\item \emph{030} Cada valor de salida $ S $ será persistido para su análisis.
+			\item \emph{031} Cada valor de salida $ S $ quedará asociado a su correspondiente secuencia con su inyección de SEFI-SEU y momento $ t $.
+			\item \emph{032} Se generará un archivo de resultados llamado\\ \texttt{resultados-AAAAMMDDHHmm.res}, siendo AAAA el año del ensayo, MM el mes, DD el día, HH la hora y mm los minutos.
+			\item \emph{033} El archivo de resultados acumulará los SEFI y SEU de cada registro del DUT.
+			\item \emph{034} El archivo de resultados acumulará los SEU de cada periférico del DUT.
+			\item \emph{035} El archivo de resultados indicará el FOM del registro definido como:
+			$ FOM_{REG} = (1 - \frac{SEU}{SEFI}) $
+			\item \emph{036} El archivo de resultados indicará el FOM del DUT definido como:
+			$ FOM_{DUT} = \frac{1}{M} \times \sum_{i = 1}^{i = M}FOM_{i} $ siendo $ i $ el número que representa un registro del DUT.
+			\item \emph{037} Se generará un archivo de histogramas llamado \\ \texttt{histogramas-AAAAMMDDHHmm.his} siendo AAAA el año del ensayo, MM el mes, DD el día, HH la hora y mm los minutos.
+			\item \emph{038} El archivo de histogramas tendrá una tabla que indique la frecuencia de fallos como función de los SEFIs por registro del DUT.
+			\item \emph{039} El archivo de histogramas tendrá una tabla que indique la frecuencia de fallos como función de los SEFIs por periférico del DUT.
+		\end{itemize}
+	\item Proceso de DUT:
+		\begin{itemize}
+			\item \emph{040} deberá correr una secuencia de autoevaluación cuya ejecución durará un tiempo $ T $.
+			\item \emph{041} deberá producir una salida $ S $ que podrá ser un estado o una secuencia de estados.
+			\item \emph{042} este proceso podrá tener una entrada $ E $.
+			\item \emph{043} deberá evaluar el estado de los periféricos del DUT.
+			\item \emph{044} tendrá una función de evaluación para cada uno de los periféricos del DUT.
+			\item \emph{045} se podrá definir por la entrada $ E $ si se desea excluir uno o más periféricos en la secuencia.
+			\item \emph{046} manejará una interrupción del flujo normal de la secuencia y generará una salida $ S $ indicando la excepción, por ejemplo: interrupción por \emph{watchdog}.
+			\item \emph{047} la salida $ S $ utilizará la UART del DUT para ser transmitida.
+			\item \emph{048} la entrada $ E $ utilizará la UART del DUT para ser recibida.
+		\end{itemize}
+\end{enumerate}
 
-``En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
+Requisitos de rendimiento:
 
-Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
+\begin{itemize}
+	\item \emph{049} la inyección de SEFI-SEU podrá tener un desvío en su momento $ t $ de 10 ms.
+	\item \emph{050} el desvío tolerado de $ t $ deberá representar como máximo el 1\% de la duración $ T $ de la secuencia del DUT.
+	\item \emph{051} aceptará un $ \Delta t $ que como mínimo represente el 5\% de la duración $ T $ de la secuencia del DUT.
+\end{itemize}
 
-Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
+Restricciones de diseño:
 
-\subsection{Figuras} 
+\begin{itemize}
+	\item \emph{052} se utilizará como dispositivo principal el microcontrolador seleccionado por INVAP.
+	\item \emph{053} se utilizará un sistema operativo de tiempo real para diseñar el Proceso de DUT.
+\end{itemize}
 
-Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
+Los atributos del sistema son los siguientes:
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-\end{figure}
-
-La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
-	\label{fig:cuadradoAzul}
-\end{figure}
-
-El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
-
-\begin{figure}[htpb]
-	\centering
-	\includegraphics[scale=.3]{./Figures/word.jpeg}
-	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
-	\label{fig:palabraIngles}
-\end{figure}
-
-\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
-
-La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
-
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.37]{./Figures/questionMark.png}
-	\caption{¿Por qué de pronto aparece esta figura?}
-	\label{fig:questionMark}
-\end{figure}
-
-Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
-
-Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
- 
-\begin{figure}[!htpb]
-     \centering
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Un caption.}
-         \label{fig:1de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Otro.}
-         \label{fig:2de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Y otro más.}
-         \label{fig:3de3}
-     \end{subfigure}
-        \caption{Tres gráficos simples}
-        \label{fig:three graphs}
-\end{figure}
-
-El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
-
-\subsection{Tablas}
-
-Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
-
-\begin{verbatim}
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
-		\midrule
-		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
-		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
-		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-\end{verbatim}
-
-
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
-		\midrule
-		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
-		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
-		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-
-En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
-
-\subsection{Ecuaciones}
-\label{sec:Ecuaciones}
-
-Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
-
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-                                                        
-Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
-
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
-	\sigma^2\left[ d\theta^2 + 
-	\sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-\end{verbatim}
-
-Y para la ecuación \ref{eq:schrodinger}:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
-	-i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-\end{verbatim}
+\begin{enumerate}
+	\item Mantenibilidad:
+	\begin{itemize}
+		\item \emph{054} el Proceso de DUT se desarrollará con un modelo de capas.
+	\end{itemize}
+\end{enumerate}
