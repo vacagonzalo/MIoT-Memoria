@@ -42,51 +42,52 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-\section{Análisis del software}
- 
-La idea de esta sección es resaltar los problemas encontrados, los criterios utilizados y la justificación de las decisiones que se hayan tomado.
+\section{Autovalidación del dispositivo bajo prueba}
+\label{sec:autovalidacion}
 
-Se puede agregar código o pseudocódigo dentro de un entorno lstlisting con el siguiente código:
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/firmware_detallado.pdf}
+    \caption{Diagrama en bloques del firmware de autovalidación.}
+	\label{fig:firmwaredetail}
+\end{figure}
 
-\begin{verbatim}
-\begin{lstlisting}[caption= "un epígrafe descriptivo"]
-	las líneas de código irían aquí...
-\end{lstlisting}
-\end{verbatim}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/firmwareflow.pdf}
+    \caption{Flujo del firmware de autovalidación.}
+	\label{fig:firmwareflow}
+\end{figure}
 
-A modo de ejemplo:
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/canloopback.png}
+    \caption{Diagrama de \emph{loopback} del periférico CAN\citep{ARTICLE:dutdatasheet}.}
+	\label{fig:canloopback}
+\end{figure}
 
-\begin{lstlisting}[label=cod:vControl,caption=Pseudocódigo del lazo principal de control.]  % Start your code-block
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/labo.jpeg}
+    \caption{Fotografía del dispositivo bajo prueba.}
+	\label{fig:labo}
+\end{figure}
 
-#define MAX_SENSOR_NUMBER 3
-#define MAX_ALARM_NUMBER  6
-#define MAX_ACTUATOR_NUMBER 6
+\begin{table}[h]
+	\centering
+	\caption[Estrategias de depuración]{Comparación entre estrategias de depuración}
 
-uint32_t sensorValue[MAX_SENSOR_NUMBER];		
-FunctionalState alarmControl[MAX_ALARM_NUMBER];	//ENABLE or DISABLE
-state_t alarmState[MAX_ALARM_NUMBER];						//ON or OFF
-state_t actuatorState[MAX_ACTUATOR_NUMBER];			//ON or OFF
-
-void vControl() {
-
-	initGlobalVariables();
-	
-	period = 500 ms;
-		
-	while(1) {
-
-		ticks = xTaskGetTickCount();
-		
-		updateSensors();
-		
-		updateAlarms();
-		
-		controlActuators();
-		
-		vTaskDelayUntil(&ticks, period);
-	}
-}
-\end{lstlisting}
-
-
-
+	\begin{tabular}{l c c}    
+		\toprule
+        \textbf{Periférico} & \textbf{Validación}       & \textbf{Detección en un ciclo}\\
+		\midrule
+		CAN                 & Loopback interno          & Si\\		
+		PIO                 & Loopback externo          & No\\
+		SPI                 & Loopback externo          & Si\\
+		UART                & Lógica en firmware        & No\\
+		Watchdog            & Lógica en firmware        & No\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:perifericos}
+\end{table}

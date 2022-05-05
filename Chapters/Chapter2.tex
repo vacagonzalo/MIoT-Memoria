@@ -8,14 +8,14 @@
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=.8\textwidth]{./Figures/Cortex-M4.png}
-    \caption{Diagrama de la arquitectura Cortex M4\citep{WEBSITE:cortexm}.}
+    \caption{Diagrama de la arquitectura \emph{Cortex M4}\citep{WEBSITE:cortexm}.}
 	\label{fig:cortexm}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/coresight.png}
-    \caption{Diagrama de la arquitectura Cortex M4\citep{WEBSITE:coresight}.}
+    \caption{Diagrama del módulo \emph{CoreSight}\citep{WEBSITE:coresight}.}
 	\label{fig:coresight}
 \end{figure}
 
@@ -36,26 +36,44 @@
 	\label{fig:sonda}
 \end{figure}
 
+
+% Tabla comparativa de servidores de depuración
+
 \begin{table}[h]
 	\centering
-	\caption[Servidores de depuración]{Comparación entre servidores de depuración}
-	\begin{tabular}{l c c}    
+	\caption[Servidores de depuración]{Comparativa entre servidores de depuración}
+	\begin{tabular}{l c c c}    
 		\toprule
-        \textbf{Periférico} & \textbf{Validación}       & \textbf{Detección en un ciclo}\\
+        \textbf{Servidor} & \textbf{API} & \textbf{Acceso}   & \textbf{Licencia}\\
 		\midrule
-		CAN                 & Loopback interno          & Si\\		
-		PIO                 & Loopback externo          & No\\
-		SPI                 & Loopback externo          & Si\\
-		UART                & Lógica en firmware        & No\\
-		Watchdog            & Lógica en firmware        & No\\
+        OpenOCD           & tcl                         & Registros y SDRAM & MIT\\        	
+        PyOCD             & Python 3                    & Registros y SDRAM & Apache-2.0\\
 		\bottomrule
 		\hline
 	\end{tabular}
-	\label{tab:perifericos}
+	\label{tab:servidores}
 \end{table}
 
 \section{Periféricos de interés}
 \label{sec:perifericos}
+
+\begin{table}[h]
+	\centering
+	\caption[Resumen de periféricos]{Resumen de periféricos}
+	\begin{tabular}{l c c}    
+		\toprule
+        \textbf{Periférico} & \textbf{Funcionalidad}\\
+		\midrule
+		CAN                 & Bus de comunicación de grado industrial\\        	
+		PIO                 & Entradas y salidas digitales\\
+		SPI                 & Interfaz de comunicación sincrónica\\
+		UART                & Puerto para dispositivos serie\\
+		Watchdog            & Detección de errores y reinicio del integrado\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:perifericosresumen}
+\end{table}
 
 \section{Requerimientos del cliente}
 \label{sec:emphuerimientos}
