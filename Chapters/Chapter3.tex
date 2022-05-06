@@ -85,9 +85,80 @@
 		PIO                 & Loopback externo          & No\\
 		SPI                 & Loopback externo          & Si\\
 		UART                & Lógica en firmware        & No\\
-		Watchdog            & Lógica en firmware        & No\\
+		Watchdog            & Lógica en inyector        & No\\
 		\bottomrule
 		\hline
 	\end{tabular}
 	\label{tab:perifericos}
 \end{table}
+
+\section{Interfaz de programación de aplicaciones}
+\label{sec:api}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/debugsession.pdf}
+    \caption{Flujo de una sesión de depuración.}
+	\label{fig:debugsession}
+\end{figure}
+
+\begin{table}[h]
+	\centering
+	\caption[Funcionalidades abstraidas]{Funcionalidades abstraidas}
+
+	\begin{tabular}{l c c}    
+		\toprule
+        \textbf{Funcionalidad}     & \textbf{Patrón de diseño} & \textbf{Acceso}\\
+		\midrule
+		Conexión al integrado      & RAII                      & Público\\		
+		Detener el núcleo          & RAII                      & Privado\\
+		Registros CORE: read/write & OOP                       & Público\\
+		Memoria SDRAM: read/write  & OOP                       & Público\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:funcionalidades}
+\end{table}
+
+\section{Sistema de inyección de soft-errors}
+\label{sec:sise}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/siseblocks.pdf}
+    \caption{Diagrama en bloques del sistema de inyección de soft-errors.}
+	\label{fig:siseblocks}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/concurrencia.pdf}
+    \caption{Flujo de tareas concurrentes.}
+	\label{fig:concurrencia}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{./Figures/poisson.png}
+    \caption{Gráfico de distribución Poisson\citep{WEBSITE:poisson}.}
+	\label{fig:poisson}
+\end{figure}
+
+\section{Biblioteca para el desarrollo de ensayos}
+\label{fig:biblioteca}
+
+\begin{lstlisting}[language=Python,label=cod:vControl,caption=Ejemplo de aplicación de la biblioteca.]  % Start your code-block
+
+import sise.library as sise
+
+dut = sise.Connection()
+
+# Bit-flip en SDRAM
+addr = 0x20400000
+bit = 0
+res = dut.bitFlipMemory(addr, bit)
+print("res:", res)
+
+del(dut)
+
+\end{lstlisting}
