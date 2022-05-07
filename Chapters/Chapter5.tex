@@ -1,34 +1,29 @@
-% Chapter Template
+\chapter{Conclusiones}
+\label{Chapter5}
 
-\chapter{Conclusiones} % Main chapter title
+Este capítulo explica de forma breve el cierre del trabajo realizado, sus logros y futuro.
 
-\label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+\section{Resultados obtenidos}
+\label{sec:5resultados}
 
-
-%----------------------------------------------------------------------------------------
-
-%----------------------------------------------------------------------------------------
-%	SECTION 1
-%----------------------------------------------------------------------------------------
-
-\section{Conclusiones generales }
-
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
-
-Algunas preguntas que pueden servir para completar este capítulo:
+El trabajo logró cumplir las expectativas y requerimientos del cliente.
+En particular, los siguientes objetivos:
 
 \begin{itemize}
-\item ¿Cuál es el grado de cumplimiento de los requerimientos?
-\item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
-\item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
-\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
-\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
+    \item Creación de un sistema de inyección de \emph{soft-errors} que permita evaluar técnicas de mitigación de errores.
+    \item Acceso a la memoria volátil del dispositivo bajo prueba.
+    \item Biblioteca para el diseño de ensayos en lenguaje \emph{Python 3}.
 \end{itemize}
 
+La recepción de este trabajo fue muy positiva; ya que en la actualidad, INVAP S.E. se encuentra en proceso de integrar la herramienta en su ambiente de desarrollo de satélites.
+Además, el sistema realizado se utiliza dentro del marco de un proyecto final en la Especialización en Sistemas Embebidos.
 
-%----------------------------------------------------------------------------------------
-%	SECTION 2
-%----------------------------------------------------------------------------------------
-\section{Próximos pasos}
+\section{Trabajo futuro}
+\label{sec:5futuro}
 
-Acá se indica cómo se podría continuar el trabajo más adelante.
+La investigación realizada durante la producción del trabajo sugiere que es posible agregar las siguientes funcionalidades:
+
+\begin{itemize}
+    \item Conexión entre el código fuente del dispositivo bajo prueba y el inyector de \emph{soft-errors}.
+    \item Creación de instrucciones específicas para la inyección de \emph{single event functional interrupt}.
+\end{itemize}
