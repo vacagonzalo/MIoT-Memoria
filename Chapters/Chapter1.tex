@@ -32,12 +32,16 @@ El cliente de este trabajo es INVAP S.E. y es una empresa de la provincia de Rí
 La compañía es modelo en su tipo y realiza proyectos tecnológicos complejos en áreas como: reactores nucleares, satélites y radares.
 En la figura \ref{fig:saocom} se puede observar un satélite realizado por la empresa.
 
+\newpage
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/invapsaocom.jpg}
-	\caption{Satélite SAOCOM \citep{WEBSITE:invap}.}
+	\caption{Satélite SAOCOM\protect\footnotemark.}
 	\label{fig:saocom}
 \end{figure}
+
+\footnotetext{Imagen tomada de la página oficial de INVAP S.E. \citep{WEBSITE:invap}}
 
 \section{Radiación cósmica y sus efectos}
 \label{sec:radiacion}
@@ -48,13 +52,6 @@ Como se puede ver en la figura \ref{fig:viento}, las partículas son desviadas p
 Luego, el campo queda deformado por el viento solar y se genera una magnetosfera asimétrica.
 En la tabla \ref{tab:capasmagneticas} se puede observar las características de la magnetosfera asimétrica.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/vientosolar.jpg}
-    \caption{Capas magnéticas de la tierra y viento solar \citep{WEBSITE:structure_space_radiation}.}
-	\label{fig:viento}
-\end{figure}
-
 \begin{table}[h]
 	\centering
 	\caption[Cinturón de Van Allen]{Cinturón de Van Allen \citep{WEBSITE:structure_space_radiation}.}
@@ -62,32 +59,49 @@ En la tabla \ref{tab:capasmagneticas} se puede observar las características de 
 		\toprule
 		\textbf{Cinturon} & \textbf{Frontera}           & \textbf{Partícula dominante}\\
 		\midrule
-		Interior          & 1.2 - 2.5 radios terrestres & Protones de alta energía\\		
-		Exterior          & 2.8 - 12 radios terrestres  & Electrones de alta energía\\
+		Interior          & 1,2 - 2,5 radios terrestres & Protones de alta energía\\		
+		Exterior          & 2,8 - 12 radios terrestres  & Electrones de alta energía\\
 		\bottomrule
 		\hline
 	\end{tabular}
 	\label{tab:capasmagneticas}
 \end{table}
 
-\newpage
 La electrónica de los satélites tiene un alto grado de exposición al viento solar.
 Esto significa que la probabilidad de incidencia de una partícula cargada en el circuito es mayor.
 La incidencia de una partícula genera una traza densa de pares electrón-hueco en los semiconductores.
 Además, es posible que esta ionización cause un pulso transitorio de corriente.
 En la figura \ref{fig:bitflip} se puede ver el efecto de la radiación sobre los transistores de un integrado.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/bitflip.jpg}
-    \caption{Ejemplo simplificado de \emph{bit flip} en un bloque \emph{SDRAM} \citep{WEBSITE:effects_on_devices}.}
-	\label{fig:bitflip}
-\end{figure}
-
 Los efectos de la radiación cósmica sobre el circuito pueden ser transitorios o permanentes.
 Los permanentes se deben a la destrucción de una parte del circuito.
 Esta destrucción es producto de: el disparo de componentes activos parásitos o la generación de plasma dentro del encapsulado.
 Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos de errores generados por la radiación cósmica.
+
+\newpage
+
+\vfill
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/vientosolar.jpg}
+    \caption{Capas magnéticas de la tierra y viento solar\protect\footnotemark.}
+	\label{fig:viento}
+\end{figure}
+
+\footnotetext{Imagen tomada del artículo \emph{Structure of space radiation} \citep{WEBSITE:structure_space_radiation}}
+
+\vfill
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./Figures/bitflip.jpg}
+    \caption{Ejemplo simplificado de \emph{bit flip} en un bloque \emph{SDRAM}\protect\footnotemark.}
+	\label{fig:bitflip}
+\end{figure}
+
+\footnotetext{Imagen tomada del artículo \emph{Effects of space radiation on electronic devices} \citep{WEBSITE:effects_on_devices}}
+
+\vfill
 
 \begin{table}[h]
 	\centering
@@ -109,6 +123,7 @@ Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos
 \end{table}
 
 \newpage
+
 \section{Calificación espacial e iniciativa \emph{new space}}
 \label{sec:newspace}
 
@@ -125,26 +140,11 @@ Además, existe la ventaja adicional de introducir tecnología de vanguardia.
 El caso de \emph{Starlink} es un ejemplo de \emph{new space} particular.
 Su volumen de satélites lanzados permite realizar conclusiones estadísticas significativas.
 En particular, su poca capacidad para cumplir sus objetivos si se mantiene la actual tasa de mortalidad de sus satélites.
-En las figuras \ref{fig:starlinkdeath1} y \ref{fig:starlinkdeath2} se puede observar que la constelación no logrará alcanzar la población deseada.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/starlinkdeath.png}
-    \caption{Gráfico Weibull de expectativa de vida \emph{Starlink} \citep{ARTICLE:cibils}.}
-	\label{fig:starlinkdeath1}
-\end{figure}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=\textwidth]{./Figures/starlinkpopulation.png}
-    \caption{Proyección de la constelación \emph{Starlink} \citep{ARTICLE:cibils}.}
-	\label{fig:starlinkdeath2}
-\end{figure}
-
+En las figura \ref{fig:starlinkdeath} se puede observar que la constelación no logrará alcanzar la población deseada.
+ 
 Al problema de población de \emph{Starlink} se suma la gran cantidad de polución generada.
 Los satélites fuera de servicio no pueden ser desorbitados y persisten en forma de \emph{debris}.
 Como se puede ver en la tabla \ref{tab:starlinkdebris}, el volumen de basura generado es significativo.
-
 
 \begin{table}[h]
 	\centering
@@ -165,9 +165,32 @@ Como se puede ver en la tabla \ref{tab:starlinkdebris}, el volumen de basura gen
 	\label{tab:starlinkdebris}
 \end{table}
 
+\newpage
+
+\begin{figure}[htbp]
+	\centering
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{./Figures/starlinkdeath.png}
+        \caption{Gráfico Weibull de expectativa de vida \emph{Starlink}.}
+        \label{fig:starlinkdeathA}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.8\textwidth}
+        \includegraphics[width=\textwidth]{./Figures/starlinkpopulation.png}
+        \caption{Proyección de la constelación \emph{Starlink}.}
+        \label{fig:starlinkdeathB}
+    \end{subfigure}
+    \hfill
+        \caption{Estadísticas de la constelación \emph{Starlink}\protect\footnotemark.}
+        \label{fig:starlinkdeath}
+\end{figure}
+\footnotetext{Imagen tomada de la publicación de Roberto Cibils \citep{ARTICLE:cibils}.}
+
 Las conclusiones del caso \emph{Starlink} muestran la importancia de tener herramientas para simular el ambiente espacial.
 En particular, los efectos de la radiación cósmica para poder probar las técnicas de mitigación de errores seleccionadas.
 Finalmente, este trabajo agrega valor al cliente al incrementar la confiabilidad de los satélites y evitar los problemas de la competencia.
+
+\newpage
 
 \section{Estado del arte}
 \label{sec:arte}
@@ -182,9 +205,11 @@ Los ensayos de pruebas de radiación en tierra tienen las siguientes estrategias
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/heavy_ion_latchup_tests_in_louvain_la_neuve.jpg}
-    \caption{Cámara de pruebas de iones pesados \citep{WEBSITE:heavy_ion}.}
+    \caption{Cámara de pruebas de iones pesados\protect\footnotemark.}
 	\label{fig:iones}
 \end{figure}
+
+\footnotetext{Imagen tomada del sitio web ucl.ac.eu \citep{WEBSITE:heavy_ion}.}
 
 Los métodos de ensayos mencionados presentan compromisos de diseño como se puede ver en la tabla \ref{tab:arte}.
 El trabajo realizado es una solución del tipo ensayo por \emph{hardware}.
@@ -205,7 +230,6 @@ El trabajo realizado es una solución del tipo ensayo por \emph{hardware}.
 	\label{tab:arte}
 \end{table}
 
-\newpage
 \section{Alcance del trabajo}
 \label{sec:alcance}
 
@@ -222,7 +246,7 @@ En la figura \ref{fig:dutsimple} se puede observar un diagrama en bloques simpli
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\textwidth]{./Figures/dutsimple.pdf}
+	\includegraphics[width=0.7\textwidth]{./Figures/dutsimple.pdf}
     \caption{Diagrama simplificado del dispositivo bajo prueba.}
 	\label{fig:dutsimple}
 \end{figure}
@@ -232,7 +256,7 @@ En la figura \ref{fig:sisesimple} se puede ver como interactúan las partes del 
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\textwidth]{./Figures/sisesimple.pdf}
+	\includegraphics[width=0.7\textwidth]{./Figures/sisesimple.pdf}
     \caption{Diagrama simplificado del sistema de inyección de errores.}
 	\label{fig:sisesimple}
 \end{figure}

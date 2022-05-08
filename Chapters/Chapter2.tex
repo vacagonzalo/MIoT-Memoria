@@ -1,26 +1,62 @@
-\chapter{Introducción específica} % Main chapter title
+\chapter{Introducción específica}
 
 \label{Chapter2}
+
+En este capítulo se detallan las tecnologías que forman parte del trabajo.
+Son productos de terceros que integran las herramientas entregadas al cliente.
 
 \section{Arquitectura del dispositivo bajo prueba}
 \label{sec:dut}
 
+El trabajo fue realizado para un tipo de microcontrolador específico.
+Su diseño forma parte de la familia \emph{Cortex M} de la empresa \emph{ARM}.
+En la figura \ref{fig:cortexm} se puede observar un diagrama en bloques de la arquitectura.
+
+Al fabricante del dispositivo bajo prueba se le impone respetar el mapa de memoria y registros del núcleo.
+Esto permitió construir un inyector de \emph{soft-errors} genérico.
+Finalmente, la herramienta entregada funciona para cualquier integrado de la familia \emph{Cortex M}.
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.8\textwidth]{./Figures/Cortex-M4.png}
-    \caption{Diagrama de la arquitectura \emph{Cortex M4}\citep{WEBSITE:cortexm}.}
+	\includegraphics[width=.7\textwidth]{./Figures/Cortex-M4.png}
+    \caption{Diagrama de la arquitectura \emph{Cortex M4}\protect\footnotemark.}
 	\label{fig:cortexm}
 \end{figure}
+
+\footnotetext{Imagen tomada de la página oficial de \emph{ARM Developers}. \citep{WEBSITE:cortexm}}
+\newpage
+
+La arquitectura tiene un módulo que permite programar y depurar el integrado.
+Este módulo se denomina \emph{CoreSight} y es propio de los dispositivos \emph{ARM}.
+En la figura \ref{fig:coresight} se muestra un diagrama en bloques del módulo.
+Sus partes principales son:
+
+\begin{itemize}
+    \item \emph{Cross Triggering}: permite conectar y encaminar las señales que utilizan las sondas de depuración.  
+    \item \emph{Debug Access Port}: es el puerto físico para conectar la sonda de depuración. Es una implementación de la interfaz de depuración \emph{ARM}.
+    \item \emph{Embedded Trace Macrocells}: permite extraer información y controlar el núcleo del dispositivo.
+    \item \emph{Instrumentation Trace Units}: permite que una sonda de depuración se conecte con las \emph{Embedded Trace Macrocells}.
+    \item \emph{ROM Tables}: sirven para que la sonda de depuración identifique al integrado.
+    \item \emph{Self Hosted Debug}: son instrucciones específicas de depuración controladas por un procesador secundario.
+    \item \emph{Trace Interconnect}: provee puentes para compartir señales de reloj, alimentación y otras señales comunes.
+\end{itemize}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/coresight.png}
-    \caption{Diagrama del módulo \emph{CoreSight}\citep{WEBSITE:coresight}.}
+    \caption{Diagrama del módulo \emph{CoreSight}\protect\footnotemark.}
 	\label{fig:coresight}
 \end{figure}
+\footnotetext{Imagen tomada del artículo \emph{How to debug: CoreSight basis}. \citep{WEBSITE:coresight}}
 
 \section{Servidores y sondas de depuración}
 \label{sec:depuracion}
+
+Una sesión de depuración sirve para observar y modificar el estado de ejecución de un programa.
+Esto se logra al leer y modificar los valores en registros del procesador y periféricos.
+Además, se necesita de un sistema de disparos por eventos y supervisión de recursos.
+Finalmente, la sesión debe detener la ejecución del núcleo de ser necesario.
+En la figura \ref{fig:debug} se puede observar un esquema simplificado de una sesión de depuración.
 
 \begin{figure}[htbp]
 	\centering
@@ -29,15 +65,25 @@
 	\label{fig:debug}
 \end{figure}
 
+\newpage
+
+Las sondas de depuración tienen el objetivo de conectar el \emph{Debug Access Port} con el puerto del ordenador del usuario.
+Adaptan los niveles de tensión y los protocolos involucrados.
+Luego, permiten realizar una sesión de depuración, programar el dispositivo o verificar el estado de los dispositivos en la placa.
+En la figura \ref{fig:sonda} se puede ver la sonda provista por el cliente.
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=.8\textwidth]{./Figures/segger.jpg}
-    \caption{Sonda de depuración \emph{Segger J-32}.}
+    \caption{Sonda de depuración \emph{Segger J-32}\protect\footnotemark.}
 	\label{fig:sonda}
 \end{figure}
+\footnotetext{Imagen tomada de \url{https://www.digikey.com/}}
 
-
-% Tabla comparativa de servidores de depuración
+Un servidor \emph{On-chip debugger} tiene la misión de abstraer la conexión la sonda de depuración.
+Además, facilita el manejo del ciclo de vida de la sesión y permite usar \emph{software} como \emph{GNU Project debugger}.
+Finalmente, es la base de una pila de tecnologías que permite el uso de herramientas como \emph{Eclipse IDE}.
+En la tabla \ref{tab:servidores} se puede observar un resumen de los servidores evaluados en el trabajo.
 
 \begin{table}[h]
 	\centering
@@ -56,6 +102,18 @@
 
 \section{Periféricos de interés}
 \label{sec:perifericos}
+
+El dispositivo bajo prueba ofrece una variedad de periféricos para el desarrollo de aplicaciones.
+Sin embargo, el cliente manifestó interés solo en los que se nombran a continuación:
+\begin{itemize}
+    \item CAN: este periférico permite al microcontrolador ser el dispositivo principal en una \emph{Controller Area Network}. La red es de grado industrial y fue diseñada para gestionar una red de sensores en un ambiente automotriz.
+    \item PIO: es el puerto de entradas y salidas digitales de propósito general. En el caso del dispositivo bajo prueba, el periférico permite usar circuitos anti rebote, \emph{pull-up} y \emph{pull-down} internos. 
+    \item SPI: el periférico permite realizar una conexión del tipo \emph{Serial Peripheral Interface}. Esta conexión es sincrónica y solo apta para distancias cortas.
+    \item UART: es un periférico que permite conectarse a puertos y controlar dispositivos serie.
+    \item Watchdog: el periférico sirve para detectar un error de ejecución y reiniciar el microprocesador.
+\end{itemize}
+
+En la tabla \ref{tab:perifericosresumen} se resume la funcionalidad de cada uno de ellos.
 
 \begin{table}[h]
 	\centering
@@ -78,143 +136,35 @@
 \section{Requerimientos del cliente}
 \label{sec:emphuerimientos}
 
-El software aquí especificado brindará las siguientes funcionalidades:
+Se realizaron una serie de reuniones con el cliente y se pudo definir los requerimientos del trabajo.
+A continuación se enumeran los principales:
 
 \begin{enumerate}
-	\item Referentes al CCI:
+	\item Referentes al inyector por consola de comandos:
 		\begin{enumerate}
 			\item Generará de una interfaz de usuario.
 			\item Permitirá configurar el ensayo a realizar.
-			\item Activará el Proceso de DUT.
-			\item Observará la salida del DUT.
-			\item Inyectará SEFI-SEU en el DUT.
+			\item Observará la salida del dispositivo bajo prueba.
+            \item Inyectará \emph{soft-errors} en el dispositivo bajo prueba.
 			\item Persistirá las operaciones, entradas y salidas.
 			\item Generará informes del ensayo realizado.
 		\end{enumerate}
-	\item Referentes al Proceso de DUT:
+	\item Referentes al proceso del dispositivo bajo prueba:
 		\begin{enumerate}
-			\item Verificará el estado de los periféricos del DUT.
-			\item Detectará si el DUT perdió su secuencia.
+			\item Verificará el estado de los periféricos del dispositivo bajo prueba.
+			\item Detectará si el dispositivo bajo prueba perdió su secuencia.
 			\item Generará reportes de estado de periféricos y secuencia.
-			\item Permitirá que CCI configure el alcance de la secuencia.
-			\item Permitirá que CCI maneje el flujo de su secuencia.
+			\item Permitirá que inyector por consola de comandos configure el alcance de la secuencia.
+			\item Permitirá que inyector por consola de comandos maneje el flujo de su secuencia.
 		\end{enumerate}
 \end{enumerate}
 
-Las restricciones del desarrollo del sistema son las siguientes:
+El cliente definió algunas restricciones para el desarrollo del sistema.
+Estas se enumeran a continuación:
 
 \begin{itemize}
-	\item Utilización de repositorio con control de versiones \emph{Gitlab}.
+	\item Utilización de un repositorio con control de versiones \emph{Gitlab}.
 	\item Documentación del código con \emph{Doxygen}.
 	\item Utilización exclusiva del lenguaje de programación \emph{Python 3}.
 \end{itemize}
 
-Los requerimientos de las interfaces externas son las siguientes:
-
-\begin{enumerate}
-	\item CCI:
-		\begin{enumerate}
-			\item Módulo para el usuario:
-				\begin{itemize}
-					\item \emph{001} deberá representar todos los caracteres de ISO Std. 10646.
-					\item \emph{002} cumplirá con las secuencias de escape especificadas en ISO Std. 6429.
-					\item \emph{003} usará el castellano como idioma conforme a la Real Academia Española.
-					\item \emph{004} se aceptarán barbarismos que conformen la interfaz con los sistemas UNIX.
-					\item \emph{005} no deberá producir destellos ni cambios bruscos en su intensidad lumínica.
-					\item \emph{006} no deberá producir sonidos
-					\item Títulos:
-						\begin{itemize}
-							\item \emph{007} los títulos deberán tener una longitud máxima de 30 caracteres.
-							\item \emph{008} los títulos deberán estar correctamente capitalizados.
-							\item \emph{009} los títulos deberán ser únicos.
-						\end{itemize}
-					\item Comandos:
-						\begin{itemize}
-							\item \emph{010} el sistema se iniciará con el comando \texttt{sise.py}.
-							\item \emph{011} el sistema imprimirá en pantalla un manual de ayuda con el comando \texttt{sise --help}.
-							\item \emph{012} se podrá exportar la configuración del último ensayo realizado con el comando \texttt{sise --export=Ruta}.
-							\item \emph{013} se podrá importar la configuración de un ensayo a realizar con el comando \texttt{sise --import=Ruta/Archivo}.
-						\end{itemize}
-					\item Menú:
-						\begin{itemize}
-							\item \emph{014} el sistema de menú tendrá una arquitectura de árbol.
-							\item \emph{015} la navegación entre los nodos del menú será consistente en todo el árbol.
-							\item \emph{016} se indicará en todo momento el nodo actual y todos los nodos que lleven a la raíz del árbol.
-						\end{itemize}
-				\end{itemize}
-			\item Con DUT:
-				\begin{itemize}
-					\item \emph{017} la comunicación con UART será en 9600 baudios, 8 bits de datos, 1 bit de parada y 0 bits de paridad.
-					\item \emph{018} la comunicación con el debugger conformará con la configuración recomendada por el fabricante.
-				\end{itemize}
-		\end{enumerate}
-	\item Proceso de DUT:
-		\begin{itemize}
-			\item \emph{019} la comunicación con el debugger estará disponible durante todo el flujo de la secuencia.
-			\item \emph{020} durante el flujo de la secuencia, la UART solo podrá transmitir información.
-			\item \emph{021} en el periodo entre secuencias, la UART podrá recibir y transmitir información.
-		\end{itemize}
-\end{enumerate}
-
-Las funciones deben cumplir lo siguiente:
-
-\begin{enumerate}
-	\item CCI:
-		\begin{itemize}
-			\item \emph{022} detendrá la secuencia de duración $ T $ del DUT en un momento $ t $ definido como $ t \, \epsilon \, \rm I\!R^+ \wedge t \, < T$.
-			\item \emph{023} con la secuencia del DUT detenida, inyectará un SEFI-SEU que invertirá el valor de un bit de un registro interno.
-			\item \emph{024} La descripción del ensayo definirá el momento $ t $ de inyección de SEFI-SEU durante la secuencia de duración $ T $ y será un múltiplo de $\Delta t$ definido como $ \Delta t=T/N \, \forall \, N \epsilon \, \rm I\!N $.
-			\item \emph{025} La descripción del ensayo definirá la cantidad $ M $ de registros involucrados en la prueba.
-			\item \emph{026} La cantidad de secuencias $ L $ a ejecutar quedará definida como \\$ L = N \times M $.
-			\item \emph{027} Se ejecutará una secuencia de control sin inyección de SEFI-SEU antes de correr las $ L $ secuencias.
-			\item \emph{028} Por cada ejecución de una secuencia se obtendrá un valor de salida $ S $ del DUT.
-			\item \emph{030} Cada valor de salida $ S $ será persistido para su análisis.
-			\item \emph{031} Cada valor de salida $ S $ quedará asociado a su correspondiente secuencia con su inyección de SEFI-SEU y momento $ t $.
-			\item \emph{032} Se generará un archivo de resultados llamado\\ \texttt{resultados-AAAAMMDDHHmm.res}, siendo AAAA el año del ensayo, MM el mes, DD el día, HH la hora y mm los minutos.
-			\item \emph{033} El archivo de resultados acumulará los SEFI y SEU de cada registro del DUT.
-			\item \emph{034} El archivo de resultados acumulará los SEU de cada periférico del DUT.
-			\item \emph{035} El archivo de resultados indicará el FOM del registro definido como:
-			$ FOM_{REG} = (1 - \frac{SEU}{SEFI}) $
-			\item \emph{036} El archivo de resultados indicará el FOM del DUT definido como:
-			$ FOM_{DUT} = \frac{1}{M} \times \sum_{i = 1}^{i = M}FOM_{i} $ siendo $ i $ el número que representa un registro del DUT.
-			\item \emph{037} Se generará un archivo de histogramas llamado \\ \texttt{histogramas-AAAAMMDDHHmm.his} siendo AAAA el año del ensayo, MM el mes, DD el día, HH la hora y mm los minutos.
-			\item \emph{038} El archivo de histogramas tendrá una tabla que indique la frecuencia de fallos como función de los SEFIs por registro del DUT.
-			\item \emph{039} El archivo de histogramas tendrá una tabla que indique la frecuencia de fallos como función de los SEFIs por periférico del DUT.
-		\end{itemize}
-	\item Proceso de DUT:
-		\begin{itemize}
-			\item \emph{040} deberá correr una secuencia de autoevaluación cuya ejecución durará un tiempo $ T $.
-			\item \emph{041} deberá producir una salida $ S $ que podrá ser un estado o una secuencia de estados.
-			\item \emph{042} este proceso podrá tener una entrada $ E $.
-			\item \emph{043} deberá evaluar el estado de los periféricos del DUT.
-			\item \emph{044} tendrá una función de evaluación para cada uno de los periféricos del DUT.
-			\item \emph{045} se podrá definir por la entrada $ E $ si se desea excluir uno o más periféricos en la secuencia.
-			\item \emph{046} manejará una interrupción del flujo normal de la secuencia y generará una salida $ S $ indicando la excepción, por ejemplo: interrupción por \emph{watchdog}.
-			\item \emph{047} la salida $ S $ utilizará la UART del DUT para ser transmitida.
-			\item \emph{048} la entrada $ E $ utilizará la UART del DUT para ser recibida.
-		\end{itemize}
-\end{enumerate}
-
-Requisitos de rendimiento:
-
-\begin{itemize}
-	\item \emph{049} la inyección de SEFI-SEU podrá tener un desvío en su momento $ t $ de 10 ms.
-	\item \emph{050} el desvío tolerado de $ t $ deberá representar como máximo el 1\% de la duración $ T $ de la secuencia del DUT.
-	\item \emph{051} aceptará un $ \Delta t $ que como mínimo represente el 5\% de la duración $ T $ de la secuencia del DUT.
-\end{itemize}
-
-Restricciones de diseño:
-
-\begin{itemize}
-	\item \emph{052} se utilizará como dispositivo principal el microcontrolador seleccionado por INVAP.
-	\item \emph{053} se utilizará un sistema operativo de tiempo real para diseñar el Proceso de DUT.
-\end{itemize}
-
-Los atributos del sistema son los siguientes:
-
-\begin{enumerate}
-	\item Mantenibilidad:
-	\begin{itemize}
-		\item \emph{054} el Proceso de DUT se desarrollará con un modelo de capas.
-	\end{itemize}
-\end{enumerate}
