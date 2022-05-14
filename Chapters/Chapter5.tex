@@ -3,27 +3,56 @@
 
 Este capítulo explica de forma breve el cierre del trabajo realizado, sus logros y futuro.
 
-\section{Resultados obtenidos}
-\label{sec:5resultados}
+\section{Logros obtenidos}
+\label{sec:logros}
 
-El trabajo logró cumplir las expectativas y requerimientos del cliente.
-En particular, los siguientes objetivos:
+El primer logro a destacar es que se pudo mejorar el estado del arte actual.
+Su mejora es la capacidad de describir una simulación en términos de la radiación cósmica.
+Esto se logró al construir una capa de abstracción de aplicaciones.
+Esta, esconde la gestión de la sesión de depuración.
+De esta manera, se superaron las técnicas utilizadas en la actualidad.
+Luego, el desarrollador solo debe describir los errores a introducir en el dispositivo bajo prueba.
+Finalmente, se agrega valor al mejorar el tiempo, costo y claridad de los ensayos.
 
-\begin{itemize}
-    \item Creación de un sistema de inyección de \emph{soft-errors} que permita evaluar técnicas de mitigación de errores.
-    \item Acceso a la memoria volátil del dispositivo bajo prueba.
-    \item Biblioteca para el diseño de ensayos en lenguaje \emph{Python 3}.
-\end{itemize}
-
-La recepción de este trabajo fue muy positiva; ya que en la actualidad, INVAP S.E. se encuentra en proceso de integrar la herramienta en su ambiente de desarrollo de satélites.
+Un segundo logro a destacar es la recepción que obtuvo este trabajo.
+La cual fue muy positiva y con un impacto mayor al esperado.
+Ya que, en la actualidad, INVAP S.E. se encuentra en proceso de integrar la herramienta en su ambiente de desarrollo de satélites.
 Además, el sistema realizado se utiliza dentro del marco de un proyecto final en la Especialización en Sistemas Embebidos.
 
+Como tercer logro a remarcar es que el trabajo pudo cumplir las expectativas y requerimientos del cliente.
+Además, se cumplieron sin desvíos respecto a la planificación de tiempo y recursos.
+Esto fue posible gracias los contenidos de gestión de proyectos que se impartieron durante el desarrollo de esta maestría.
+Finalmente, estos son los objetivos más destacados:
+
+\begin{itemize}
+    \item Creación de un sistema de inyección de errores transitorios que permita evaluar técnicas de mitigación de errores.
+    \item Acceso a los componentes de interés del dispositivo bajo prueba.
+    \item Biblioteca para el diseño de ensayos de radiación cósmica en lenguaje \emph{Python 3}.
+    \item \emph{Firmware} de autoevaluación del dispositivo bajo prueba que verifique los periféricos de interés.
+\end{itemize}
+
+\newpage
+
 \section{Trabajo futuro}
-\label{sec:5futuro}
+\label{sec:futuro}
 
 La investigación realizada durante la producción del trabajo sugiere que es posible agregar las siguientes funcionalidades:
 
 \begin{itemize}
-    \item Conexión entre el código fuente del dispositivo bajo prueba y el inyector de \emph{soft-errors}.
+    \item Conexión entre el código fuente del dispositivo bajo prueba y el inyector de errores transitorios.
+        Esto se lograría a través del uso de los símbolos de depuración generados en el binario.
+        Con estos símbolos es posible unir un valor del registro \emph{program counter} con una línea en el código fuente.
+        Esta funcionalidad permitiría analizar la vulnerabilidad de un segmento de código escrito en lenguaje \emph{C/C++}.
     \item Creación de instrucciones específicas para la inyección de \emph{single event functional interrupt}.
+        Estas instrucciones lograrían alterar los registros que definen la configuración de un periférico.
+        De esta manera, se podrían realizar pruebas sobre las técnicas de mitigación de este tipo de errores.
+        La dificultad a superar es que los registros de los periféricos son propios del dispositivo en particular.
+        Para lograr una abstracción genérica se requiere definir el comportamiento de las funciones en tiempo de ejecución.
 \end{itemize}
+
+Si se lograran introducir estas funcionalidades al trabajo realizado, el método de simulación de errores transitorio por \emph{software} quedaría obsoleto.
+Esto tendría el efecto de modificar el estado del arte; ya que se evitaría el problema que tiene el método al intentar introducir un error cuando el integrado no se encuentra en modo privilegiado.
+
+Como se mencionó en la sección \ref{sec:logros}, este trabajo forma parte de un proyecto final de la especialización en sistemas embebidos.
+Probablemente se obtengan sugerencias y nuevas ideas durante su desarrollo.
+Finalmente, se seguirá con interés la evolución del trabajo en curso.
