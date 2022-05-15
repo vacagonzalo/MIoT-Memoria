@@ -14,11 +14,11 @@ Se explica la problemática solucionada y los conceptos necesarios para la lectu
 \section{El espacio como recurso estratégico}
 \label{sec:1space}
 
-El espacio exterior es un recurso estratégico para el bienestar de la humanidad.
-Dado que, su explotación permite mejorar la producción de bienes y servicios.
+La explotación del espacio exterior permite mejorar la producción de bienes y servicios.
 Además, provee datos de valor científico que incrementan la calidad de vida de las personas \citep{BOOK:spaceage}.
+Finalmente, es una fuente de desafíos que impulsa el desarrollo tecnológico.
 
-El marco jurídico que regula la explotación del recurso es el Tratado sobre el espacio exterior de 1967.
+El marco jurídico que regula la explotación del recurso es el tratado sobre el espacio exterior de 1967.
 Del cual, la República Argentina es miembro desde el 27 de enero de ese año.
 Los países pueden reclamar cualquiera de las órbitas disponibles pero tienen la obligación de hacer uso dentro de un margen de tiempo determinado.
 Luego, si el país no ocupó la órbita pierde el derecho a usarla \citep{BOOK:resurrect}.
@@ -57,7 +57,7 @@ En la tabla \ref{tab:capasmagneticas} se puede observar las características de 
 	\caption[Cinturón de Van Allen]{Cinturón de Van Allen \citep{WEBSITE:structure_space_radiation}.}
 	\begin{tabular}{l c c}    
 		\toprule
-		\textbf{Cinturon} & \textbf{Frontera}           & \textbf{Partícula dominante}\\
+		\textbf{Cinturón} & \textbf{Frontera}           & \textbf{Partícula dominante}\\
 		\midrule
 		Interior          & 1,2 - 2,5 radios terrestres & Protones de alta energía\\		
 		Exterior          & 2,8 - 12 radios terrestres  & Electrones de alta energía\\
@@ -71,16 +71,22 @@ La electrónica de los satélites tiene un alto grado de exposición al viento s
 Esto significa que la probabilidad de incidencia de una partícula cargada en el circuito es mayor.
 La incidencia de una partícula genera una traza densa de pares electrón-hueco en los semiconductores \citep{ARTICLE:velazco}.
 Además, es posible que esta ionización cause un pulso transitorio de corriente.
-En la figura \ref{fig:bitflip} se puede ver el efecto de la radiación sobre los transistores de un integrado.
 
 Los efectos de la radiación cósmica sobre el circuito pueden ser transitorios o permanentes.
 Los permanentes se deben a la destrucción de una parte del circuito.
 Esta destrucción es producto de: el disparo de componentes activos parásitos o la generación de plasma dentro del encapsulado \citep{WEBSITE:effects_on_devices}.
 Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos de errores generados por la radiación cósmica.
 
-\newpage
+En la figura \ref{fig:bitflip} se puede ver el efecto transitorio de la radiación sobre los transistores de un integrado.
+En particular, la inyección de un error denominado \emph{bit flip}.
+Este se manifiesta como el cambio del valor de un bit en un registro o memoria.
+En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros.
+Estos representan los huecos y electrones generados por el efecto Compton y fotoeléctrico.
+La línea punteada oblicua representa la traza generada al perturbar los electrones de las uniones covalentes del semiconductor.
+Esta traza genera perturbaciones en las junturas y logra disparar las compuertas de los transistores.
+Luego, la activación de los transistores cambian los niveles de tensión en las señales de datos y control.
+Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 
-\vfill
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./Figures/vientosolar.jpg}
@@ -89,8 +95,6 @@ Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos
 \end{figure}
 
 \footnotetext{Imagen tomada del artículo \emph{Structure of space radiation} \citep{WEBSITE:structure_space_radiation}}
-
-\vfill
 
 \begin{figure}[htbp]
 	\centering
@@ -140,7 +144,7 @@ Además, existe la ventaja adicional de introducir tecnología de vanguardia.
 El caso de \emph{Starlink} es un ejemplo de \emph{new space} particular.
 Su volumen de satélites lanzados permite realizar conclusiones estadísticas significativas.
 En particular, su poca capacidad para cumplir sus objetivos si se mantiene la actual tasa de mortalidad de sus satélites \citep{ARTICLE:cibils}.
-En las figura \ref{fig:starlinkdeath} se puede observar que la constelación no logrará alcanzar la población deseada.
+En la figura \ref{fig:starlinkdeath} se puede observar que la constelación no logrará alcanzar la población deseada.
  
 Al problema de población de \emph{Starlink} se suma la gran cantidad de polución generada.
 Los satélites fuera de servicio no pueden ser desorbitados y persisten en forma de \emph{debris}.
@@ -169,20 +173,9 @@ Como se puede ver en la tabla \ref{tab:starlinkdebris}, el volumen de basura gen
 
 \begin{figure}[htbp]
 	\centering
-    \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{./Figures/starlinkdeath.png}
-        \caption{Gráfico Weibull de expectativa de vida \emph{Starlink}.}
-        \label{fig:starlinkdeathA}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.8\textwidth}
-        \includegraphics[width=\textwidth]{./Figures/starlinkpopulation.png}
-        \caption{Proyección de la constelación \emph{Starlink}.}
-        \label{fig:starlinkdeathB}
-    \end{subfigure}
-    \hfill
-        \caption{Estadísticas de la constelación \emph{Starlink}\protect\footnotemark.}
-        \label{fig:starlinkdeath}
+    \includegraphics[width=\textwidth]{./Figures/starlinkpopulation.png}
+    \caption{Proyección de la constelación \emph{Starlink}\protect\footnotemark.}
+    \label{fig:starlinkdeath}
 \end{figure}
 \footnotetext{Imagen tomada de la publicación de Roberto Cibils \citep{ARTICLE:cibils}.}
 
@@ -190,17 +183,32 @@ Las conclusiones del caso \emph{Starlink} muestran la importancia de tener herra
 En particular, los efectos de la radiación cósmica para poder probar las técnicas de mitigación de errores seleccionadas.
 Finalmente, este trabajo agrega valor al cliente al incrementar la confiabilidad de los satélites y evitar los problemas de la competencia.
 
-\newpage
-
 \section{Estado del arte}
 \label{sec:arte}
 
-Los ensayos de pruebas de radiación en tierra tienen las siguientes estrategias \citep{ARTICLE:velazco}:
+La microelectrónica se encuentra en un proceso constante de cambio.
+Se incrementa la densidad de integración, la velocidad de los dispositivos y se reducen los niveles de tensión eléctrica.
+Este progreso hace que los circuitos sean más vulnerables a la radiación cósmica.
+
+El uso de dispositivos sin calificación espacial hace que los riesgos frente a un error transitorio sean mayores.
+Además, la aplicación final de vuelo no suele estar disponible durante la fase de desarrollo de los proyectos.
+Esto dificulta aún más la mitigación de errores y aumenta la vulnerabilidad de los sistemas.
+
+La manera tradicional de evaluar las técnicas de mitigación de errores es realizar un ensayo por radiación.
+En estos ensayos se utilizan instalaciones en tierra para pruebas de radiación.
+Sin embargo, estas instalaciones son costosas y la preparación y ejecución de los ensayos consumen mucho tiempo.
+
+Para lograr un ensayo por radiación, las instalaciones deben producir un rayo de partículas cargadas.
+Estas partículas se pueden obtener de:
 \begin{itemize}
-    \item Ensayo por \emph{software}: se introducen instrucciones espúreas en el código para generar errores.
-    \item Ensayo por \emph{hardware}: se conecta un dispositivo que introduce errores durante la ejecución del programa.
-    \item Ensayo por radiación: se introduce el dispositivo bajo prueba en una cámara de iones pesados como se puede ver en la figura \ref{fig:iones}.
+    \item Aceleradores de partículas: en esta categoría se incluyen ciclotrones y aceleradores lineales.
+    \item Decaimiento por fisión: basados en el decaimiento por fisión espontánea de elementos como $Cf^{252}$.
 \end{itemize}
+
+En la figura \ref{fig:iones} se puede observar una cámara de iones pesados.
+Durante el ensayo se ejecuta una metodología particular que define la actividad en el dispositivo bajo prueba.
+Además, se necesita de un sistema que controle y observe el dispositivo bajo prueba durante su exposición a la radiación.
+Finalmente, se requiere de personal calificado en el diseño, ejecución e interpretación de estos ensayos.
 
 \begin{figure}[htbp]
 	\centering
@@ -211,8 +219,65 @@ Los ensayos de pruebas de radiación en tierra tienen las siguientes estrategias
 
 \footnotetext{Imagen tomada del sitio web ucl.ac.eu \citep{WEBSITE:heavy_ion}.}
 
-Los métodos de ensayos mencionados presentan compromisos de diseño como se puede ver en la tabla \ref{tab:arte}.
+Las estrategias para la inyección de errores pueden ser estáticas o dinámicas.
+En las estáticas solo se observa si se producen cambios en valores determinados de memorias y registros.
+Las pruebas dinámicas se realizan mientras se activan secuencias de lectura y escritura de memorias.
+También incluyen la ejecución de programas para estimular el procesador.
+
+El diseño de un ensayo dinámico necesita determinar la contribución de \emph{SEU} sobre una sección trasversal de memoria.
+La cual está relacionada con su tiempo de lectura y escritura (ciclo de trabajo).
+La sección trasversal de un programa se puede definir entonces como:
+
+\begin{equation}
+	\label{eq:crosssection}
+    \sigma_{(SEU)} = \sum{d(R_i) \times \sigma_{R_i}}
+\end{equation}
+
+\newpage
+
+Donde:
+\begin{itemize}
+    \item $ d(R_i) $ es el ciclo de trabajo del elemento de memoria $ R $.
+    \item $ \sigma_{R_i} $ es la sección trasversal de memoria obtenida por la metodología estática \citep{ARTICLE:velazco}.
+\end{itemize}
+
+Como se puede ver en la ecuación \ref{eq:crosssection} diseñar un ensayo dinámico por radiación es un proceso largo y costoso.
+Demanda personal capacitado e instalaciones específicas.
+Además, la electrónica de vuelo no suele estar presente durante el desarrollo del proyecto.
+Finalmente, este método no permite un control preciso del ensayo.
+
+Otra técnica disponible son los ensayos basados en \emph{software}.
+Este método se basa en introducir instrucciones espúreas que generen errores.
+Esto genera la problemática de estimar la tasa de error.
+Con esta tasa se puede determinar en que posiciones del programa corresponde introducir las instrucciones de error.
+La tasa de error se estima como:
+
+\begin{equation}
+	\label{eq:errorrate}
+    \tau_{SEU} = \sigma_{SEU} \times \tau_{inj}
+\end{equation}
+
+Donde $ \tau_{inj} $ es la tasa de incidencia de una partícula cargada.
+
+Esta técnica demanda ciclos de la unidad de proceso y por lo tanto consume más tiempo de ejecución.
+Además, cada vez que se altera el código fuente de la aplicación se necesita volver a diseñar una serie nueva de ensayos.
+
+Existe una tercera técnica de ensayo de errores transitorios.
+Esta técnica está basada en \emph{hardware}; y en el caso de los microprocesadores, se utiliza una sonda de depuración.
+La principal ventaja de este método frente al basado en \emph{software}, es que un mismo ensayo puede ser utilizado para múltiples iteraciones del código fuente.
+Esto es posible al suponer un flujo constante de partículas cargadas.
+De esta manera, los errores siguen un proceso Poisson homogéneo.
+Luego, el intervalo de tiempo entre dos errores transitorios expresa una distribución exponencial.
+Este razonamiento está sustentado en la siguiente ecuación:
+
+\begin{equation}
+	\label{eq:poisson}
+    P(N_{SEU}(t + \Delta t) = N_{SEU}(t) ) = e^{-\sigma \times \phi \times \Delta t}
+\end{equation}
+
 El trabajo realizado es una solución del tipo ensayo por \emph{hardware}.
+Además, se propuso superar el estado del arte de este método al crear una abstracción para el diseño de ensayos.
+Los métodos mencionados presentan compromisos de diseño y están resumidos en la tabla \ref{tab:arte}.
 
 \begin{table}[h]
 	\centering
@@ -229,6 +294,8 @@ El trabajo realizado es una solución del tipo ensayo por \emph{hardware}.
 	\end{tabular}
 	\label{tab:arte}
 \end{table}
+
+\newpage
 
 \section{Alcance del trabajo}
 \label{sec:alcance}
