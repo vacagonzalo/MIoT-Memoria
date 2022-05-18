@@ -74,7 +74,7 @@ La configuración se realizó de la siguiente manera:
         El primero como salida sin \emph{latch} y el segundo como entrada sin circuito anti rebote.
     \item \emph{SPI}: la configuración elegida fue por defecto ya que el \emph{loopback} se logró conectando \emph{TX} y \emph{RX} con un cable.
     \item \emph{UART}: se configuró el periférico con una velocidad de 9600 baudios, 8 bits de datos y sin bits de paridad.
-    \item \emph{Watchdog}: el disparo se configuró con un contador a 4095 cuentas.
+    \item \emph{Watchdog}: el disparo se configuró con un contador en 4095 cuentas.
         Este valor se estimó entre dos y cinco ejecuciones del \emph{loop} principal.
 \end{itemize}
 
@@ -181,16 +181,17 @@ while ( true )
 % técnica RAII
 % conexión como recurso
 La interfaz de programación de aplicaciones tiene la función de abstraer al inyector de errores del servidor \emph{OCD}.
-Esto se logró usando los siguientes patrones de diseño:
+Esto se logró con los siguientes patrones de diseño:
 
 \begin{itemize}
     \item Programación orientada a objetos \emph{(OOP)}: este patrón de diseño se basa en agrupar en una unidad lógica las funcionalidades y estados que tengan un alto grado de acoplamiento.
         Esto significa que la funciones que tienen efectos colaterales junto a los datos mutados se encapsulan dentro de una construcción denominada objeto.
-        El principal objetivo de un objeto es contener dentro suyo los efectos colaterales.
-        Finalmente, el lenguaje de programación \emph{Python 3} permite, a través de una \emph{class}, modelar un tipo de dato que permite instanciar a un objeto.
-    \item \emph{Resource Acquisition Is Initialization (RAII)}: este patrón de diseño consiste en modelar el ciclo de vida de un recurso al usar un objeto.
-        Un recurso es todo aquello que requiera mantenimiento luego de su uso, como por ejemplo: liberar memoria, cerrar una conexión o unir dos hilos de programa.
-        Esto se logra adquiriendo un recurso cuando se invoca el constructor de la \emph{class} por ejemplo, la conexión con la sonda de depuración se realiza durante la instanciación de un objeto llamado conexión.
+        Entonces, el principal objetivo de un objeto es contener dentro suyo los efectos colaterales.
+        Además, el lenguaje de programación \emph{Python 3} permite, a través de una \emph{class}, modelar un tipo de dato para instanciar a un objeto.
+        Finalmente, este patrón se utilizó para contener las funciones de lectura y escritura de registros y memorias.
+    \item \emph{Resource Acquisition Is Initialization (RAII)}: este patrón de diseño consiste en modelar el ciclo de vida de un recurso con la implementación de un objeto.
+        Un recurso es todo aquello que requiera mantenimiento luego de su uso, como por ejemplo: liberar memoria, cerrar una conexión o unir dos hilos de un programa.
+        Esto se logra al adquirir un recurso cuando se invoca el constructor de una \emph{class}, por ejemplo, la conexión con la sonda de depuración se realiza durante la instanciación de un objeto llamado conexión.
         Luego, cuando se desea cerrar la conexión se invoca al destructor del objeto.
         Dentro de esta función se encuentra el código para cerrar de forma ordenada la conexión con la sonda y el dispositivo bajo prueba.
         Finalmente, este patrón de diseño hace que el programa maneje de forma robusta los recursos ya que está garantizada la ejecución de los destructores.
@@ -216,8 +217,8 @@ class Halted():
 
 Los patrones de diseño utilizados permiten escribir funciones expresivas y robustas.
 Como se puede ver en el código \ref{cod:haltedexample}, es fácil comprender lo que sucede.
-Se detiene el núcleo para leer una posición de memoria; luego de la lectura, el núcleo continua en funcionamiento.
-Finalmente, se retorna el valor leído.
+En la línea 2 se detiene el núcleo y en la línea 3 se lee una posición de memoria.
+Luego, en la línea 4 el núcleo reanuda su funcionamiento y finalmente, se retorna el valor leído.
 
 \newpage
 
@@ -250,7 +251,7 @@ En la tabla \ref{tab:funcionalidades} se puede observar un resumen de las funcio
 	\label{tab:funcionalidades}
 \end{table}
 
-Finalmente, se logró abstraer el ciclo de vida de la sesión de depuración como se muestra en la figura \ref{fig:debugsession}.
+Finalmente, se logró abstraer el ciclo de vida de la sesión de depuración que se muestra en la figura \ref{fig:debugsession}.
 
 \begin{figure}[htbp]
 	\centering
@@ -274,7 +275,7 @@ El archivo de configuración se genera en formato \emph{YAML} y se encarga de:
             \item El tipo de distribución para usar en el planificador de ensayos.
             \item La tasa de inyección de errores.
             \item La duración del tiempo de exposición en un registro o posición de memoria.
-            \item Secuencia de exposición de los registros.
+            \item La secuencia de exposición de los registros.
         \end{itemize}
 \end{itemize}
 
@@ -282,8 +283,8 @@ El archivo de configuración se genera en formato \emph{YAML} y se encarga de:
 
 En el código \ref{cod:yaml} se puede observar un archivo de configuración.
 En particular, la configuración que el sistema ofrece como ejemplo al usuario.
-Es importante notar que la configuración no hace referencia a la sesión de depuración.
-El ensayo se expresa en términos de parámetros de radiación.
+Es importante notar que no se hace referencia a la sesión de depuración.
+Finalmente, el ensayo se expresa en términos de parámetros de radiación.
 
 Para facilitar la tarea del usuario, una vez instalado el sistema no es necesario trabajar en una carpeta en particular.
 El inyector se puede invocar desde cualquier sitio donde el intérprete de Python 3 tenga permisos de ejecución.
@@ -295,8 +296,8 @@ Finalmente, el sistema genera el reporte correspondiente en esa ruta.
 
 # Perfil determina el tipo de ensayo a realizar
 # 'simulador' solo genera inyecciones mientras
-#  que 'evaluador' recoge y procesa los
-#  reportes del DUT.
+# que 'evaluador' recoge y procesa los
+# reportes del DUT.
 Perfil: 'simulador'
 
 # Interfaz define el puerto serie donde se
@@ -316,7 +317,7 @@ Simulacion:
 
 % Consola
 
-La interfaz por consola se logró utilizando el \emph{standar input} y el \emph{standar output} del proceso padre.
+La interfaz por consola se logró al utilizar el \emph{standar input} y el \emph{standar output} del proceso padre.
 En el caso de una sesión iniciada por un humano, el emulador de terminal del sistema.
 En una primera iteración de la consola se realizó una interfaz ASCII con la biblioteca \emph{curses}.
 Sin embargo, el cliente prefirió una interfaz por texto plano para facilitar el \emph{parsing} de un sistema de integración continua.
@@ -349,7 +350,7 @@ Finalmente, cuando el controlador consume la totalidad de la planificación, env
 % Generador de reportes
 
 El generador de reportes es un hilo que escucha el puerto serie del ordenador.
-Mientras dura el ensayo, almacena toda los mensajes entrantes y los acumula junto a un \emph{timestamp}.
+Mientras dura el ensayo, almacena todos los mensajes entrantes y los acumula junto a un \emph{timestamp}.
 De la misma manera, persiste las inyecciones realizadas como tuplas.
 Estas tuplas tienen todos los datos relevantes de la inyección junto a un \emph{timestamp}.
 Cuando el ensayo finaliza, recibe una señal desde el hilo principal del programa que le ordena hacer un \emph{join}.
@@ -387,7 +388,7 @@ Finalmente, en la figura \ref{fig:concurrencia} se puede observar un diagrama co
 \section{Biblioteca para el desarrollo de ensayos}
 \label{fig:biblioteca}
 
-Para que el usuario pueda realizar sus propios ensayos, se creó una biblioteca que provee una funcionalidad necesaria.
+Para que el usuario pueda realizar sus propios ensayos, se creó una biblioteca que le provee la funcionalidad necesaria.
 Esta biblioteca se divide en dos partes:
 
 \begin{itemize}
@@ -397,7 +398,7 @@ Esta biblioteca se divide en dos partes:
 
 Para facilitar la interacción con el núcleo, se implementó una lista con los nombres de los registros.
 De esta manera, se facilita el uso de las funciones.
-En el código \ref{cod:corereg} se puede observar la colección que se le ofrece al ingeniero.
+En el código \ref{cod:corereg} se puede observar la colección que se le ofrece al diseñador.
 
 \begin{lstlisting}[language=Python,label=cod:corereg,caption=Lista de registros accesibles por el usuario.]  % Start your code-block
 
@@ -446,7 +447,7 @@ del(dut)
 
 \end{lstlisting}
 
-Para interactuar con la memoria se disponen de las funciones demostradas en el código \ref{cod:menapi}.
+Para interactuar con la memoria se dispone de las funciones demostradas en el código \ref{cod:menapi}.
 Los métodos se detallan a continuación:
 \begin{itemize}
     \item Línea 7: el método permite realizar una lectura del dato en una posición de memoria.
