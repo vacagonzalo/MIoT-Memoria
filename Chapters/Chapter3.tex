@@ -89,7 +89,7 @@ La configuración se realizó de la siguiente manera:
 
 Como se puede ver en la figura \ref{fig:labo}, se priorizaron los \emph{loopbacks} físicos externos.
 Cuando esta estrategia no fue posible, se optó por internos provistos por el fabricante.
-Finalmente, en los casos que las dos primeras opciones fuesen imposibles, se utilizó una estrategia de \emph{software}.
+Finalmente, en los casos que las dos primeras opciones fueron imposibles, se utilizó una estrategia de \emph{software}.
 En la tabla \ref{tab:perifericos} se puede ver un resumen de las estrategias aplicadas.
 
 \begin{table}[h]
@@ -197,7 +197,7 @@ Esto se logró usando los siguientes patrones de diseño:
 \end{itemize}
 
 En el código \ref{cod:halted} se puede observar un ejemplo de \emph{RAII} donde se maneja como recurso la detención del núcleo del dispositivo bajo prueba.
-Esto permite que frente una excepción del proceso que esté utilizando la interfaz de programación de aplicaciones, el núcleo pueda continuar operando.
+Esto permite que frente a una excepción del proceso que esté utilizando la interfaz de programación de aplicaciones, el núcleo pueda continuar operando.
 Finalmente, se posibilita recuperar el proceso sin tener que reiniciar el dispositivo bajo prueba.
 
 \begin{lstlisting}[language=Python,label=cod:halted,caption=Ejemplo de \emph{Resource Acquisition Is Initialization (RAII)}.]  % Start your code-block
@@ -216,7 +216,7 @@ class Halted():
 
 Los patrones de diseño utilizados permiten escribir funciones expresivas y robustas.
 Como se puede ver en el código \ref{cod:haltedexample}, es fácil comprender lo que sucede.
-Se detiene el núcleo para leer una posición de memoria, luego de la lectura, el núcleo continua en funcionamiento.
+Se detiene el núcleo para leer una posición de memoria; luego de la lectura, el núcleo continua en funcionamiento.
 Finalmente, se retorna el valor leído.
 
 \newpage
@@ -259,10 +259,116 @@ Finalmente, se logró abstraer el ciclo de vida de la sesión de depuración com
 	\label{fig:debugsession}
 \end{figure}
 
-\section{Sistema de inyección de emph{soft-errors}}
+\section{Sistema de inyección de \emph{soft-errors}}
 \label{sec:sise}
 
 Una vez lograda la interfaz de programación de aplicaciones explicada en la sección \ref{sec:api}, se pudo construir el inyector por consola de comandos.
+Para lograr que el usuario utilice el programa se creó un sistema de archivo de configuración y un cliente de terminal en texto plano.
+El archivo de configuración se genera en formato \emph{YAML} y se encarga de:
+
+\begin{itemize}
+    \item Definir si el controlador de ensayos debe recoger los reportes del dispositivo bajo prueba.
+    \item Configurar el puerto serie del ordenador.
+    \item Definir la simulación:
+        \begin{itemize}
+            \item El tipo de distribución para usar en el planificador de ensayos.
+            \item La tasa de inyección de errores.
+            \item La duración del tiempo de exposición en un registro o posición de memoria.
+            \item Secuencia de exposición de los registros.
+        \end{itemize}
+\end{itemize}
+
+% Configuración
+
+En el código \ref{cod:yaml} se puede observar un archivo de configuración.
+En particular, la configuración que el sistema ofrece como ejemplo al usuario.
+Es importante notar que la configuración no hace referencia a la sesión de depuración.
+El ensayo se expresa en términos de parámetros de radiación.
+
+Para facilitar la tarea del usuario, una vez instalado el sistema no es necesario trabajar en una carpeta en particular.
+El inyector se puede invocar desde cualquier sitio donde el intérprete de Python 3 tenga permisos de ejecución.
+El operador puede entonces crear una carpeta del ensayo.
+Luego, crear un archivo de configuración y lanzar desde allí mismo la secuencia de inyecciones.
+Finalmente, el sistema genera el reporte correspondiente en esa ruta.
+
+\begin{lstlisting}[language=Python,label=cod:yaml,caption=Ejemplo de configuración de ensayo.]  % Start your code-block
+
+# Perfil determina el tipo de ensayo a realizar
+# 'simulador' solo genera inyecciones mientras
+#  que 'evaluador' recoge y procesa los
+#  reportes del DUT.
+Perfil: 'simulador'
+
+# Interfaz define el puerto serie donde se
+# conecto el DUT.
+Interfaz:
+  puerto: '/dev/ttyACM0'
+  baudios: 9600
+
+# Simulacion define la forma de inyectar errores
+Simulacion:
+  distribucion: 'Poisson'
+  tasa: 0.5
+  duracion: 5
+  registros: 'secuencial'
+
+\end{lstlisting}
+
+% Consola
+
+La interfaz por consola se logró utilizando el \emph{standar input} y el \emph{standar output} del proceso padre.
+En el caso de una sesión iniciada por un humano, el emulador de terminal del sistema.
+En una primera iteración de la consola se realizó una interfaz ASCII con la biblioteca \emph{curses}.
+Sin embargo, el cliente prefirió una interfaz por texto plano para facilitar el \emph{parsing} de un sistema de integración continua.
+En particular, el módulo de \emph{CI/CD} de \emph{Gitlab}.
+
+El usuario invoca el programa al ejecutar el comando \texttt{sise}.
+Luego la consola responde con la leyenda \texttt{Ingrese el archivo de configuración > }.
+Se escribe la ruta y nombre del archivo a utilizar y el sistema lanza el ensayo.
+El reporte generado se persiste en la carpeta donde se inició el programa.
+
+% Planificador de ensayos
+
+Con la información suministrada por el archivo de configuración y la consola, se puede iniciar el planificador de ensayos.
+Este módulo tiene la función de generar una variable aleatoria que genera tiempos entre inyecciones de errores.
+La variable aleatoria se construye con los datos de distribución y tasa de error.
+El proceso aleatorio se repite hasta que la sumatoria de los tiempos generados sea igual o mayor al tiempo deseado del ensayo.
+Luego, se asigna cada tiempo a un registro del núcleo en particular.
+Esta asignación se realiza según la configuración del usuario.
+Finalmente, se entrega la planificación al controlador de ensayos.
+
+% Controlador de ensayos
+
+El controlador de ensayos es un hilo del programa que tiene la misión de ejecutar una planificación de ensayos.
+Su ejecución se basa en la interfaz de abstracción de aplicaciones explicada en la sección \ref{sec:api}.
+Luego, tiene la responsabilidad de observar el tiempo de ejecución del dispositivo bajo prueba.
+Cuando el momento es adecuado, el controlador invoca una función de \emph{bit flip}.
+El bit a invertir se determina en el momento de inyección con una variable aleatoria uniforme.
+Finalmente, cuando el controlador consume la totalidad de la planificación, envía una señal para solicitar el \emph{join} con el hilo principal del programa.
+
+% Generador de reportes
+
+El generador de reportes es un hilo que escucha el puerto serie del ordenador.
+Mientras dura el ensayo, almacena toda los mensajes entrantes y los acumula junto a un \emph{timestamp}.
+De la misma manera, persiste las inyecciones realizadas como tuplas.
+Estas tuplas tienen todos los datos relevantes de la inyección junto a un \emph{timestamp}.
+Cuando el ensayo finaliza, recibe una señal desde el hilo principal del programa que le ordena hacer un \emph{join}.
+Luego, el generador de reportes deja de escuchar el puerto serie y al controlador de ensayos.
+Seguidamente, se procede a construir un reporte en formato de tabla de \emph{MS Excel} y \emph{CSV}.
+Para lograrlo, se genera una relación de causalidad entre errores inyectados y respuestas del dispositivo bajo prueba.
+Finalmente, se generan los archivos en la carpeta donde el comando \texttt{sise} fue lanzado.
+
+% Funcionamiento concurrente
+
+La mayor dificultad del inyector fue el manejo concurrente de los hilos del controlador de ensayo y el generador de reportes.
+En particular, porque ambos hilos comparten el uso del puerto serie.
+Esta situación genera una condición de carrera que se tuvo que manejar.
+Luego, se decidió evitar candados y semáforos al explotar la topología de \emph{bus} en árbol del protocolo \emph{USB}.
+De esta manera, la conexión con la UART y el DAP se trató como si estuviesen conectados en puertos físicos diferentes.
+Esta decisión de diseño tiene la ventaja de no incrementar el error de las mediciones de tiempo.
+Un error en la medición generaría relaciones de causalidad incorrectas y por lo tanto los informes no serían confiables.
+Sin embargo, se introdujo un punto de falla al depender de la capacidad de la sonda de depuración y su gestión de su árbol de dispositivos.
+Finalmente, en la figura \ref{fig:concurrencia} se puede observar un diagrama con los hilos del programa.
 
 \begin{figure}[htbp]
 	\centering
@@ -278,27 +384,102 @@ Una vez lograda la interfaz de programación de aplicaciones explicada en la sec
 	\label{fig:concurrencia}
 \end{figure}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.7\textwidth]{./Figures/poisson.png}
-    \caption{Gráfico de distribución Poisson\citep{WEBSITE:poisson}.}
-	\label{fig:poisson}
-\end{figure}
-
 \section{Biblioteca para el desarrollo de ensayos}
 \label{fig:biblioteca}
 
-\begin{lstlisting}[language=Python,label=cod:vControl,caption=Ejemplo de aplicación de la biblioteca.]  % Start your code-block
+Para que el usuario pueda realizar sus propios ensayos, se creó una biblioteca que provee una funcionalidad necesaria.
+Esta biblioteca se divide en dos partes:
+
+\begin{itemize}
+    \item Funcionalidades del núcleo.
+    \item Funcionalidades de la memoria.
+\end{itemize}
+
+Para facilitar la interacción con el núcleo, se implementó una lista con los nombres de los registros.
+De esta manera, se facilita el uso de las funciones.
+En el código \ref{cod:corereg} se puede observar la colección que se le ofrece al ingeniero.
+
+\begin{lstlisting}[language=Python,label=cod:corereg,caption=Lista de registros accesibles por el usuario.]  % Start your code-block
+
+CORE_REGISTERS = [
+    'lr', 'pc', 'sp', 'xpsr', 'r0', 'r1', 'r2', 'r3',
+    'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'
+]
+
+\end{lstlisting}
+
+Las funcionalidades ofrecidas para manipular el núcleo del integrado se muestran en el código \ref{cod:coreapi}.
+Los detalles son los siguientes:
+
+\begin{itemize}
+    \item En la línea 6 se muestra el uso de la función de lectura de registros.
+        Se invoca a partir del objeto de conexión y su argumento es el nombre del registro a leer.
+    \item En la línea 10 se puede observar el uso del método de escritura de registros.
+        Necesita como argumento el nombre del registro y el valor a escribir.
+        Luego, la función retorna una tupla con los valores previos y posterior a la escritura.
+    \item En la línea 15 se ve una llamada a la función de \emph{bit flip} del registro del núcleo.
+        Se debe indicar el nombre del registro y la posición del bit a invertir.
+        Finalmente, se retorna el valor previo y posterior al llamado del método.
+\end{itemize}
+
+
+\begin{lstlisting}[language=Python,label=cod:coreapi,caption=Ejemplo de uso en registros del núcleo.]  % Start your code-block
 
 import sise.library as sise
 
 dut = sise.Connection()
 
-# Bit-flip en SDRAM
+# Lectura del registro del CORE
+rreg = dut.readRegister('pc')
+print("PC:", rreg)
+
+# Escritura del registro del CORE
+wreg = writeRegister('r0', 0xffffffff)
+print("(old, new):", wreg)
+
+# Bit-flip en registro del CORE
+bit = 2
+bfreg = bitFlipRegister('r1', bit)
+print("(old, new):", bfreg)
+
+del(dut)
+
+\end{lstlisting}
+
+Para interactuar con la memoria se disponen de las funciones demostradas en el código \ref{cod:menapi}.
+Los métodos se detallan a continuación:
+\begin{itemize}
+    \item Línea 7: el método permite realizar una lectura del dato en una posición de memoria.
+        El argumento es una dirección alineada de la memoria y el retorno es el valor de una palabra de 32 bits.
+    \item Línea 12: esta función se utiliza para escribir una posición alineada de memoria.
+        Se necesita pasarle una dirección y un valor a escribir.
+        Finalmente, retorna una tupla con el dato previo y posterior a la ejecución del método.
+    \item Línea 18: la subrutina posibilita hacer un \emph{bit flip} en una posición de memoria.
+        El método toma como argumento una posición alineada de memoria y el bit a invertir.
+        Luego de su ejecución, se retorna el valor previo y posterior a la inversión.
+\end{itemize}
+
+\begin{lstlisting}[language=Python,label=cod:menapi,caption=Ejemplo de uso en memoria.]  % Start your code-block
+
+import sise.library as sise
+
+dut = sise.Connection()
+
+# Lectura de memoria
+addr = 0x20400004
+rmen = readMemory(addr)
+print("men:", rmen)
+
+# Escritura de memoria
+addr = 0x20400008
+wmen = writeMemory(addr, 0xfafafafa):
+print("(old, new):", wmen)
+
+# Bit-flip en memoria
 addr = 0x20400000
 bit = 0
-res = dut.bitFlipMemory(addr, bit)
-print("res:", res)
+bfmen = dut.bitFlipMemory(addr, bit)
+print("(old, new):", bfmen)
 
 del(dut)
 
