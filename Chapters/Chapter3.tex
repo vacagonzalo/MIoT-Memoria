@@ -42,9 +42,9 @@ Se explica su diseño y producción.
 
 La construcción del \emph{firmware} de autoevaluación del dispositivo bajo prueba requirió superar las siguientes etapas:
 \begin{itemize}
-    \item Configuración de las señales de reloj del dispositivo bajo prueba.
-    \item Selección y configuración de los periféricos del dispositivo bajo prueba.
-    \item Selección y configuración de los terminales externos del dispositivo bajo prueba.
+    \item Configuración de las señales de reloj.
+    \item Selección y configuración de los periféricos.
+    \item Selección y configuración de los terminales externos.
     \item Implementación de las estrategias de validación de periféricos.
     \item Integración de una secuencia de validación y reporte.
 \end{itemize}
@@ -100,9 +100,9 @@ En la tabla \ref{tab:perifericos} se puede ver un resumen de las estrategias apl
 		\toprule
         \textbf{Periférico} & \textbf{Validación}       & \textbf{Detección en un ciclo}\\
 		\midrule
-		CAN                 & Loopback interno          & Si\\		
+		CAN                 & Loopback interno          & Sí\\		
 		PIO                 & Loopback externo          & No\\
-		SPI                 & Loopback externo          & Si\\
+		SPI                 & Loopback externo          & Sí\\
 		UART                & Lógica en firmware        & No\\
 		Watchdog            & Lógica en inyector        & No\\
 		\bottomrule
@@ -117,6 +117,8 @@ En la tabla \ref{tab:perifericos} se puede ver un resumen de las estrategias apl
     \caption{Fotografía del dispositivo bajo prueba.}
 	\label{fig:labo}
 \end{figure}
+
+\newpage
 
 Una vez configurados los componentes de \emph{hardware} del dispositivo bajo prueba; se procedió a diseñar el \emph{firmware}.
 Se comenzó con la estructura que define los reportes de estado del dispositivo bajo prueba.
@@ -181,10 +183,10 @@ while ( true )
 % técnica RAII
 % conexión como recurso
 La interfaz de programación de aplicaciones tiene la función de abstraer al inyector de errores del servidor \emph{OCD}.
-Esto se logró con los siguientes patrones de diseño:
+Esto se logró con los siguientes paradigmas y patrones de diseño:
 
 \begin{itemize}
-    \item Programación orientada a objetos \emph{(OOP)}: este patrón de diseño se basa en agrupar en una unidad lógica las funcionalidades y estados que tengan un alto grado de acoplamiento.
+    \item Programación orientada a objetos \emph{(OOP)}: este paradigma de diseño se basa en agrupar en una unidad lógica las funcionalidades y estados que tengan un alto grado de acoplamiento.
         Esto significa que la funciones que tienen efectos colaterales junto a los datos mutados se encapsulan dentro de una construcción denominada objeto.
         Entonces, el principal objetivo de un objeto es contener dentro suyo los efectos colaterales.
         Además, el lenguaje de programación \emph{Python 3} permite, a través de una \emph{class}, modelar un tipo de dato para instanciar a un objeto.
@@ -263,7 +265,7 @@ Finalmente, se logró abstraer el ciclo de vida de la sesión de depuración que
 \section{Sistema de inyección de \emph{soft-errors}}
 \label{sec:sise}
 
-Una vez lograda la interfaz de programación de aplicaciones explicada en la sección \ref{sec:api}, se pudo construir el inyector por consola de comandos.
+Una vez lograda la interfaz de programación de aplicaciones explicada en la sección \ref{sec:api}, se pudo construir el inyector por consola de comandos que se muestra en la figura \ref{fig:siseblocks}.
 Para lograr que el usuario utilice el programa se creó un sistema de archivo de configuración y un cliente de terminal en texto plano.
 El archivo de configuración se genera en formato \emph{YAML} y se encarga de:
 
@@ -396,7 +398,7 @@ Esta biblioteca se divide en dos partes:
     \item Funcionalidades de la memoria.
 \end{itemize}
 
-Para facilitar la interacción con el núcleo, se implementó una lista con los nombres de los registros.
+Para facilitar la interacción con el núcleo se implementó una lista con los nombres de los registros.
 De esta manera, se facilita el uso de las funciones.
 En el código \ref{cod:corereg} se puede observar la colección que se le ofrece al diseñador.
 
@@ -417,12 +419,13 @@ Los detalles son los siguientes:
         Se invoca a partir del objeto de conexión y su argumento es el nombre del registro a leer.
     \item En la línea 10 se puede observar el uso del método de escritura de registros.
         Necesita como argumento el nombre del registro y el valor a escribir.
-        Luego, la función retorna una tupla con los valores previos y posterior a la escritura.
+        Luego, la función retorna una tupla con los valores previos y posteriores a la escritura.
     \item En la línea 15 se ve una llamada a la función de \emph{bit flip} del registro del núcleo.
         Se debe indicar el nombre del registro y la posición del bit a invertir.
         Finalmente, se retorna el valor previo y posterior al llamado del método.
 \end{itemize}
 
+\newpage
 
 \begin{lstlisting}[language=Python,label=cod:coreapi,caption=Ejemplo de uso en registros del núcleo.]  % Start your code-block
 
