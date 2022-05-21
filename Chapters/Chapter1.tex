@@ -77,11 +77,12 @@ Los permanentes se deben a la destrucción de una parte del circuito.
 Esta destrucción es producto de: el disparo de componentes activos parásitos o la generación de plasma dentro del encapsulado \citep{WEBSITE:effects_on_devices}.
 Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos de errores generados por la radiación cósmica.
 
+Los errores trasistorios son denominados \emph{soft-errors} y son el objeto de estudio de este trabajo.
 En la figura \ref{fig:bitflip} se puede ver el efecto transitorio de la radiación sobre los transistores de un integrado.
 En particular, la inyección de un error denominado \emph{bit flip}.
 Este se manifiesta como el cambio del valor de un bit en un registro o memoria.
 En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros.
-Estos representan los huecos y electrones generados por el efecto Compton y fotoeléctrico.
+Estos representan los huecos y electrones generados por el efecto Compton \citep{BOOK:comptom} y fotoeléctrico.
 La línea punteada oblicua representa la traza generada al perturbar los electrones de las uniones covalentes del semiconductor.
 Esta traza genera perturbaciones en las junturas y logra disparar las compuertas de los transistores.
 Luego, la activación de los transistores cambian los niveles de tensión en las señales de datos y control.
@@ -105,8 +106,6 @@ Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 
 \footnotetext{Imagen tomada del artículo \emph{Effects of space radiation on electronic devices} \citep{WEBSITE:effects_on_devices}}
 
-\vfill
-
 \begin{table}[h]
 	\centering
 	\caption[Efectos de la radiación cósmica]{Efectos producidos por la radiación cósmica \citep{WEBSITE:structure_space_radiation}.}
@@ -125,8 +124,6 @@ Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 	\end{tabular}
 	\label{tab:radiacion}
 \end{table}
-
-\newpage
 
 \section{Calificación espacial e iniciativa \emph{new space}}
 \label{sec:newspace}
@@ -224,8 +221,7 @@ En las estáticas solo se observa si se producen cambios en valores determinados
 Las pruebas dinámicas se realizan mientras se activan secuencias de lectura y escritura de memorias.
 También incluyen la ejecución de programas para estimular el procesador.
 
-El diseño de un ensayo dinámico necesita determinar la contribución de \emph{SEU} sobre una sección trasversal de memoria.
-La cual está relacionada con su tiempo de lectura y escritura (ciclo de trabajo).
+El diseño de un ensayo dinámico necesita determinar la contribución de \emph{SEU} sobre una sección trasversal de memoria que está relacionada con su tiempo de lectura y escritura (ciclo de trabajo).
 La sección trasversal de un programa se puede definir entonces como:
 
 \begin{equation}
@@ -264,9 +260,8 @@ Además, cada vez que se altera el código fuente de la aplicación se necesita 
 
 Existe una tercera técnica de ensayo de errores transitorios.
 Esta técnica está basada en \emph{hardware}; y en el caso de los microprocesadores, se utiliza una sonda de depuración.
-La principal ventaja de este método frente al basado en \emph{software}, es que un mismo ensayo puede ser utilizado para múltiples iteraciones del código fuente.
-Esto es posible al suponer un flujo constante de partículas cargadas.
-De esta manera, los errores siguen un proceso Poisson homogéneo.
+La principal ventaja de este método frente al basado en \emph{software} es que un mismo ensayo puede ser utilizado para múltiples iteraciones del código fuente.
+Esto es posible al suponer un flujo constante de partículas cargadas, de esta manera, los errores siguen un proceso Poisson homogéneo.
 Luego, el intervalo de tiempo entre dos errores transitorios expresa una distribución exponencial.
 Este razonamiento está sustentado en la siguiente ecuación:
 
