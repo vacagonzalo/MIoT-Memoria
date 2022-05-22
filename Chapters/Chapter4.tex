@@ -46,7 +46,7 @@ Con el laboratorio remoto montado, se procedió a realizar las siguientes prueba
     \item Pruebas de acceso al dispositivo bajo prueba.
 \end{itemize}
 
-Las pruebas referidas a la sonda de depuración arrojó como resultado lo siguiente:
+Las pruebas referidas a la sonda de depuración arrojaron como resultado lo siguiente:
 
 \begin{itemize}
     \item El modo de \emph{boot} de la sonda determina el nivel de acceso al dispositivo bajo prueba.
@@ -82,7 +82,7 @@ Las funcionalidades con tres marcas tienen el mismo nivel de servicio que el lab
 
 \begin{table}[h]
 	\centering
-	\caption[Resumen del laboratorio remoto]{Resumen del laboratorio remoto}
+	\caption[Resumen del laboratorio remoto]{Resumen del laboratorio remoto.}
 
 	\begin{tabular}{l c}    
 		\toprule
@@ -182,3 +182,28 @@ Finalmente, se llegó al cumplimiento total de los requerimientos como se puede 
 	\end{tabular}
 	\label{tab:validacion}
 \end{table}
+
+En la figura \ref{fig:demobitflip} se puede observar una demostración del acceso a memoria SDRAM.
+Se puede ver que la terminal está dividida en las siguientes partes:
+
+\begin{itemize}
+    \item Sección izquierda: se hizo una demostración paso a paso.
+        Primero, se importó la biblioteca dentro del espacio de trabajo.
+        Luego, se conectó al dispositivo y se cargó una dirección de memoria y el bit a invertir.
+        Seguidamente, se realizó una inversión y se mostró el valor previo y posterior al \emph{bit flip}.
+        Finalmente, se cerró la conexión con el dispositivo alternativo.
+    \item Sección derecha: se observa el mapa de memoria SDRAM del dispositivo alternativo.
+        Se usó para mostrarle al cliente las direcciones de memoria ensayadas.
+\end{itemize}
+
+Este ensayo además de demostrar el acceso a memoria SDRAM también ejercita la capacidad de realizar \emph{bit flip}.
+Finalmente, el cliente consideró que se habían cumplido todos los requisitos y que el trabajo se encontraba finalizado.
+
+Los ensayos finales se volvieron a reproducir en presencia de un estudiante de la especialización en sistemas embebidos quién actualmente utiliza la herramienta en el marco de su proyecto final.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/demo_bitflip.png}
+    \caption{Demostración de acceso a memoria.}
+	\label{fig:demobitflip}
+\end{figure}
