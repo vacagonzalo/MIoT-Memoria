@@ -9,13 +9,14 @@ Son productos de terceros que se integran en las herramientas entregadas al clie
 \label{sec:dut}
 
 El trabajo fue realizado para un tipo de microcontrolador específico.
-Su diseño forma parte de la familia \emph{Cortex M7} de la empresa \emph{ARM}.
+Su diseño forma parte de la familia \emph{Cortex M7} de la empresa ARM.
 En la figura \ref{fig:cortexm} se puede observar un diagrama en bloques de la arquitectura.
 
-El dispositivo bajo prueba es el microcontrolador \emph{SAM V71} diseñado por la empresa \emph{Atmel} y comercializado por \emph{Microchip}.
+El dispositivo bajo prueba es el microcontrolador \emph{SAM V71} diseñado por la empresa Atmel y comercializado por Microchip.
 El integrado fue pensado para aplicaciones automotrices según el estándar \emph{ISO-TS-16949}.
 Además, el circuito puede operar con un reloj de 300 MHz y almacenar un programa de 2048 kB.
-Las estructuras de datos del programa pueden aprovechar la memoria cache dual de 16 kB \citep{ARTICLE:dutdatasheet}.
+Las estructuras de datos del programa pueden aprovechar la memoria caché dual de 16 kB \citep{ARTICLE:dutdatasheet}.
+
 Las principales características del dispositivo bajo prueba son:
 
 \begin{itemize}
@@ -43,8 +44,9 @@ Las principales características del dispositivo bajo prueba son:
 
 Este integrado fue sometido a una prueba por radiación donde se evaluaron SEE y la calificación de dosis total de ionización (TID).
 El microcontrolador mantuvo su funcionamiento en todo el rango de temperatura de calificación militar.
-Además, el dispositivo es inmune a \emph{Single Event Latch-up} con una tolerancia de 60,0 $MeV.cm^2/mg$.
+Además, el dispositivo es inmune a \emph{Single Event Latch-up} con una tolerancia de 60,0 $\text{MeV.cm}^2\text{/mg}$.
 Esta sensibilidad fue probada con una cámara de iones pesados.
+
 En cuanto a la calificación de dosis total de ionización, el lote fue sometido a un ensayo de 30 krad(Si) y la prueba fue superada.
 Finalmente, los ensayos suministrados por el fabricante permiten concluir que no es necesario realizar inyecciones de errores en la memoria \emph{flash} \citep{ARTICLE:dutrad}.
 
@@ -62,7 +64,8 @@ Finalmente, la herramienta entregada funciona para cualquier integrado de la fam
 \footnotetext{Imagen tomada de la página oficial de \emph{ARM Developers}. \citep{WEBSITE:cortexm}}
 
 La arquitectura tiene un módulo que permite programar y depurar el integrado.
-Este módulo se denomina \emph{CoreSight} y es propio de los dispositivos \emph{ARM}.
+Este módulo se denomina \emph{CoreSight} y es propio de los dispositivos ARM.
+
 En la figura \ref{fig:coresight} se muestra un diagrama en bloques del módulo.
 Sus partes principales son:
 
@@ -70,7 +73,7 @@ Sus partes principales son:
     \item \emph{Cross Triggering}: permite conectar y encaminar las señales que utilizan las sondas de depuración.
         En la figura \ref{fig:coresight} está representada en los bloques \emph{CTI}.
         Además, se unen a través del \emph{Cross Trigger Matrix (CTM)}.
-    \item \emph{Debug Access Port (DAP)}: es el puerto físico para conectar la sonda de depuración. Es una implementación de la interfaz de depuración \emph{ARM}.
+    \item \emph{Debug Access Port (DAP)}: es el puerto físico para conectar la sonda de depuración. Es una implementación de la interfaz de depuración ARM.
     \item \emph{Embedded Trace Macrocells}: permite extraer información y controlar el núcleo del dispositivo.
     \item \emph{Instrumentation Trace Units}: permite que una sonda de depuración se conecte con las \emph{Embedded Trace Macrocells}.
     \item \emph{ROM Tables}: sirven para que la sonda de depuración identifique al integrado.
@@ -104,7 +107,8 @@ En la figura \ref{fig:debug} se puede observar un esquema simplificado de una se
 
 Un servidor \emph{On-chip debugger (OCD)} tiene la misión de abstraer la conexión de la sonda de depuración.
 Además, facilita el manejo del ciclo de vida de la sesión y permite usar un \emph{software} como \emph{GNU Project debugger (GDB)}.
-Finalmente, es la base de una pila de tecnologías que permite el uso de herramientas como \emph{GNU Emacs (Emacs)} \citep{BOOK:gdb}.
+Finalmente, es la base de una pila de tecnologías que permite el uso de herramientas como \emph{GNU Emacs} \citep{BOOK:gdb}.
+
 En la tabla \ref{tab:servidores} se puede observar un resumen de los servidores evaluados en el trabajo.
 
 \begin{table}[h]
@@ -126,8 +130,6 @@ El servidor OCD utilizado en este trabajo es PyOCD.
 La principal característica que lo diferencia es el uso de Python 3 como lenguaje de \emph{scripting}.
 Además, provee un servidor GDB, permite la programación de memoria \emph{flash} y ofrece una interfaz por consola de comandos \citep{WEBSITE:pyocd}.
 Finalmente, los datos mas relevantes son:
-
-\newpage
 
 \begin{itemize}
     \item Requerimientos:
@@ -201,8 +203,6 @@ En la tabla \ref{tab:perifericosresumen} se resume la funcionalidad de cada uno 
 	\label{tab:perifericosresumen}
 \end{table}
 
-\newpage
-
 \section{Entornos de desarrollo}
 \label{sec:entornos}
 
@@ -249,7 +249,7 @@ Su funcionamiento es modal, esto significa que el editor funciona en los siguien
 
 Neovim tiene la capacidad de conectarse a un servidor de análisis sintáctico de un lenguaje en particular.
 Esto lo logra a través del \emph{Language Server Protocol (LSP)}.
-El protocolo permite que un demonio realice el análisis de la sintaxis del código y envíe al editor información sobre errores y advertencias.
+El protocolo permite que un \emph{daemon} realice el análisis de la sintaxis del código y envíe al editor información sobre errores y advertencias.
 De esta manera se separa al editor del análisis sintáctico del lenguaje.
 Además, Neovim tiene incorporado los diccionarios de la mayoría de los idiomas. Con solo ejecutar \texttt{:set spelllang=es} y \texttt{:set spell}, el editor resalta las palabras que no estén escritas en correcto castellano.
 
@@ -257,6 +257,7 @@ El último elemento del flujo de trabajo es el multiplexor de terminal Tmux.
 Este programa permite dividir la terminal, crear \emph{buffers} y crear o conectarse a sesiones locales y remotas.
 Esto posibilita partir una terminal y trabajar en simultáneo en dos o más ordenadores.
 Finalmente, se trabajó de forma integrada con un ambiente de laboratorio remoto y sistemas de desarrollo locales.
+
 En la figura \ref{fig:nvim} se puede ver un ejemplo del flujo de trabajo.
 
 \begin{figure}[htbp]
@@ -298,8 +299,8 @@ El cliente definió algunas restricciones para el desarrollo del sistema.
 Estas se enumeran a continuación:
 
 \begin{itemize}
-	\item Utilización de un repositorio con control de versiones \emph{Gitlab}.
-	\item Documentación del código con \emph{Doxygen}.
-	\item Utilización exclusiva del lenguaje de programación \emph{Python 3}.
+	\item Utilización de un repositorio con control de versiones Gitlab.
+	\item Documentación del código con Doxygen.
+	\item Utilización exclusiva del lenguaje de programación Python 3.
 \end{itemize}
 
