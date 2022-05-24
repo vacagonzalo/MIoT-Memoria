@@ -50,7 +50,7 @@ El sol produce partículas de luz e iones pesados que de forma conjunta se denom
 Este fenómeno es atenuado antes de llegar a la superficie del planeta gracias al campo magnético terrestre \citep{WEBSITE:structure_space_radiation}.
 Como se puede ver en la figura \ref{fig:viento}, las partículas son desviadas por el campo.
 Luego, este queda deformado por el viento solar y se genera una magnetosfera asimétrica.
-En la tabla \ref{tab:capasmagneticas} se puede observar las características de la asimétria.
+En la tabla \ref{tab:capasmagneticas} se pueden observar las características de la asimetría.
 
 \begin{table}[h]
 	\centering
@@ -81,8 +81,7 @@ Los errores trasistorios son denominados \emph{soft-errors} y son el objeto de e
 En la figura \ref{fig:bitflip} se puede ver el efecto transitorio de la radiación sobre los transistores de un integrado.
 En particular, la inyección de un error denominado \emph{bit flip}.
 Este se manifiesta como el cambio del valor de un bit en un registro o memoria.
-En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros.
-Estos representan los huecos y electrones generados por el efecto Compton \citep{BOOK:comptom} y fotoeléctrico.
+En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros, estos representan los huecos y electrones generados por el efecto Compton \citep{BOOK:comptom} y fotoeléctrico.
 La línea punteada oblicua representa la traza generada al perturbar los electrones de las uniones covalentes del semiconductor.
 Esta traza genera perturbaciones en las junturas y logra disparar las compuertas de los transistores.
 Luego, la activación de los transistores cambian los niveles de tensión en las señales de datos y control.
@@ -111,21 +110,21 @@ Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 	\caption[Efectos de la radiación cósmica]{Efectos producidos por la radiación cósmica \citep{WEBSITE:structure_space_radiation}.}
 	\begin{tabular}{l c c}    
 		\toprule
-		\textbf{Evento}      & \textbf{Acrónimo} & \textbf{Efecto}\\
+		\textbf{Evento}             & \textbf{Acrónimo} & \textbf{Efecto}\\
 		\midrule
-		Latch-up             & SEL               & Pico de corriente\\		
-		Upset                & SEU               & Alteración de datos\\
-		Funtional Interrupt  & SEFI              & Cambios en la configuración\\
-		Transient            & SET               & Pico de tensión\\
-		Burnout              & SEB               & Activación de transistores parásitos\\
-		Gate Rapture         & SEGR              & Generación de plasma de alta densidad\\
+        \emph{Latch-up}             & SEL               & Pico de corriente\\		
+        \emph{Upset}                & SEU               & Alteración de datos\\
+        \emph{Funtional Interrupt}  & SEFI              & Cambios en la configuración\\
+        \emph{Transient}            & SET               & Pico de tensión\\
+        \emph{Burnout}              & SEB               & Activación de transistores parásitos\\
+        \emph{Gate Rapture}         & SEGR              & Generación de plasma de alta densidad\\
 		\bottomrule
 		\hline
 	\end{tabular}
 	\label{tab:radiacion}
 \end{table}
 
-\section{Calificación espacial e iniciativa \emph{new space}}
+\section{Calificación espacial e iniciativa \emph{New Space}}
 \label{sec:newspace}
 
 A los efectos vistos en la sección \ref{sec:radiacion} se suman: el estrés mecánico del lanzamiento y los cambios de temperatura en la órbita.
@@ -133,26 +132,26 @@ Este ambiente genera la necesidad de utilizar componentes con calificación espa
 Para que un componente alcance la calificación espacial se debe someter a un largo y costoso proceso de acreditación.
 Luego, estos componentes adolecen de un elevado precio y atraso tecnológico frente a los del mercado masivo \citep{ARTICLE:negocio}.
 
-La irrupción del sector privado vista en la sección \ref{sec:1space}, trajo una nueva iniciativa comercial denominada \emph{new space}.
+La irrupción del sector privado vista en la sección \ref{sec:1space}, trajo una nueva iniciativa comercial denominada \emph{New Space}.
 Esta iniciativa busca bajar los costos al utilizar componentes no calificados para su uso espacial.
 Además, existe la ventaja adicional de introducir tecnología de vanguardia.
 
 
-El caso de \emph{Starlink} es un ejemplo de \emph{new space} particular.
+El caso de Starlink es un ejemplo de \emph{New Space} particular.
 Su volumen de satélites lanzados permite realizar conclusiones estadísticas significativas.
 En particular, su poca capacidad para cumplir sus objetivos si se mantiene la actual tasa de mortalidad de sus satélites \citep{ARTICLE:cibils}.
 En la figura \ref{fig:starlinkdeath} se puede observar que la constelación no logrará alcanzar la población deseada.
  
-Al problema de población de \emph{Starlink} se suma la gran cantidad de polución generada.
+Al problema de población de Starlink se suma la gran cantidad de polución generada.
 Los satélites fuera de servicio no pueden ser desorbitados y persisten en forma de \emph{debris}.
 Como se puede ver en la tabla \ref{tab:starlinkdebris}, el volumen de basura generado es significativo.
 
 \begin{table}[h]
 	\centering
-    \caption[Proyección de \emph{debris}]{Proyección de \emph{debris} de \emph{Starlink} \citep{ARTICLE:cibils}.}
+    \caption[Proyección de \emph{debris}]{Proyección de \emph{debris} de Starlink \citep{ARTICLE:cibils}.}
 	\begin{tabular}{c c c c c}    
 		\toprule
-        \textbf{Lanzamientos} & \textbf{Satélites} & \textbf{Total lanzados} & \textbf{Población} & \textbf{Debris}\\
+        \textbf{Lanzamientos} & \textbf{Satélites} & \textbf{Total lanzados} & \textbf{Población} & \textbf{\emph{Debris}}\\
 		\midrule
         12                    & 60                 & 7200                    & 2704               & 4046\\		
         12                    & 180                & 21600                   & 8105               & 12146\\		
@@ -171,12 +170,12 @@ Como se puede ver en la tabla \ref{tab:starlinkdebris}, el volumen de basura gen
 \begin{figure}[htbp]
 	\centering
     \includegraphics[width=\textwidth]{./Figures/starlinkpopulation.png}
-    \caption{Proyección de la constelación \emph{Starlink}\protect\footnotemark.}
+    \caption{Proyección de la constelación Starlink\protect\footnotemark.}
     \label{fig:starlinkdeath}
 \end{figure}
 \footnotetext{Imagen tomada de la publicación de Roberto Cibils \citep{ARTICLE:cibils}.}
 
-Las conclusiones del caso \emph{Starlink} muestran la importancia de tener herramientas para simular el ambiente espacial.
+Las conclusiones del caso Starlink muestran la importancia de tener herramientas para simular el ambiente espacial.
 En particular, los efectos de la radiación cósmica para poder probar las técnicas de mitigación de errores seleccionadas.
 Finalmente, este trabajo agrega valor al cliente al incrementar la confiabilidad de los satélites y evitar los problemas de la competencia.
 
@@ -237,13 +236,11 @@ Donde:
     \item $ \sigma_{R_i} $ es la sección trasversal de memoria obtenida por la metodología estática \citep{ARTICLE:velazco}.
 \end{itemize}
 
-Como se puede ver en la ecuación \ref{eq:crosssection} diseñar un ensayo dinámico por radiación es un proceso largo y costoso.
-Demanda personal capacitado e instalaciones específicas.
+Diseñar un ensayo dinámico por radiación es un proceso largo y costoso, demanda personal capacitado e instalaciones específicas.
 Además, la electrónica de vuelo no suele estar presente durante el desarrollo del proyecto.
 Finalmente, este método no permite un control preciso del ensayo.
 
-Otra técnica disponible son los ensayos basados en \emph{software}.
-Este método se basa en introducir instrucciones espúreas que generen errores.
+Otra técnica disponible son los ensayos basados en \emph{software}, cuyo método se basa en introducir instrucciones espúreas que generen errores.
 Esto genera la problemática de estimar la tasa de error.
 Con esta tasa se puede determinar en que posiciones del programa corresponde introducir las instrucciones de error.
 La tasa de error se estima como:
@@ -304,6 +301,7 @@ El trabajo realizado se divide en dos partes:
 El \emph{firmware} en el dispositivo bajo prueba tiene la misión de validar su funcionamiento.
 Esto se logró al verificar cada periférico de interés dentro del integrado.
 Luego, se generan reportes periódicos que se envían al inyector por consola de comandos.
+
 En la figura \ref{fig:dutsimple} se puede observar un diagrama en bloques simplificado.
 
 \begin{figure}[htbp]
