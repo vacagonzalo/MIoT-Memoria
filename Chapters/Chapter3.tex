@@ -51,6 +51,7 @@ La construcción del \emph{firmware} de autoevaluación del dispositivo bajo pru
 
 Para configurar las frecuencias de reloj se buscó obtener 150 MHz para suministrar al \emph{Master CAN Bus}.
 Con esta condición satisfecha, se pudo configurar las frecuencias de reloj del resto de los periféricos.
+
 En la figura \ref{fig:clock} se puede observar la utilización del \emph{Programmable Clock Controller} número cinco.
 
 \begin{figure}[htbp]
@@ -90,6 +91,7 @@ La configuración se realizó de la siguiente manera:
 Como se puede ver en la figura \ref{fig:labo}, se priorizaron los \emph{loopbacks} físicos externos.
 Cuando esta estrategia no fue posible, se optó por internos provistos por el fabricante.
 Finalmente, en los casos que las dos primeras opciones fueron imposibles, se utilizó una estrategia de \emph{software}.
+
 En la tabla \ref{tab:perifericos} se puede ver un resumen de las estrategias aplicadas.
 
 \begin{table}[h]
