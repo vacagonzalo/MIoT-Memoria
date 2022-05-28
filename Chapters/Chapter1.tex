@@ -46,10 +46,17 @@ En la figura \ref{fig:saocom} se puede observar un satélite realizado por la em
 \section{Radiación cósmica y sus efectos}
 \label{sec:radiacion}
 
-El sol produce partículas de luz e iones pesados que de forma conjunta se denominan viento solar.
-Este fenómeno es atenuado antes de llegar a la superficie del planeta gracias al campo magnético terrestre \citep{WEBSITE:structure_space_radiation}.
-Como se puede ver en la figura \ref{fig:viento}, las partículas son desviadas por el campo.
-Luego, este queda deformado por el viento solar y se genera una magnetosfera asimétrica.
+En el espacio hay tres fuentes de radiación ionizante de intensidad significativa:
+
+\begin{itemize}
+    \item Los electrones y protones que están atrapados en el campo magnético terrestre.
+    \item Los protones e iones pesados que provienen del espacio interestelar.
+    \item Los protones e iones pesados emitidos durante las fulguraciones solares.
+\end{itemize}
+
+La radiación es atenuada antes de llegar a la superficie del planeta gracias al campo magnético terrestre \citep{WEBSITE:structure_space_radiation}.
+Como se puede ver en la figura \ref{fig:viento}, las partículas son desviadas y absorbidas por el campo.
+Luego, este queda deformado y se genera una magnetosfera asimétrica.
 En la tabla \ref{tab:capasmagneticas} se pueden observar las características de la asimetría.
 
 \begin{table}[h]
@@ -67,34 +74,53 @@ En la tabla \ref{tab:capasmagneticas} se pueden observar las características de
 	\label{tab:capasmagneticas}
 \end{table}
 
-La electrónica de los satélites tiene un alto grado de exposición al viento solar.
+La electrónica de los satélites se encuentra parcialmente blindada por las estructuras circundantes, sin embargo existe un alto grado de exposición a la radiación ionizante que se encuentra presente en su órbita.
 Esto significa que la probabilidad de incidencia de una partícula cargada en el circuito es mayor.
 La incidencia de una partícula genera una traza densa de pares electrón-hueco en los semiconductores \citep{ARTICLE:velazco}.
 Además, es posible que esta ionización cause un pulso transitorio de corriente.
 
 Los efectos de la radiación cósmica sobre el circuito pueden ser transitorios o permanentes.
 Los permanentes se deben a la destrucción de una parte del circuito.
-Esta destrucción es producto de: el disparo de componentes activos parásitos o la generación de plasma dentro del encapsulado \citep{WEBSITE:effects_on_devices}.
+Esta destrucción es producto del disparo de componentes activos parásitos \citep{WEBSITE:effects_on_devices}.
 Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos de errores generados por la radiación cósmica que de forma conjunta se denominan \emph{Single Event Effects (SEE)}.
 
-Los errores trasistorios son denominados \emph{soft-errors} y son el objeto de estudio de este trabajo.
+Los cambios transitorios de estados internos de la electrónica dan lugar a lo que se denomina como \emph{soft-errors}, y son el objeto de estudio de este trabajo.
 En la figura \ref{fig:bitflip} se puede ver el efecto transitorio de la radiación sobre los transistores de un integrado.
-En particular, la inyección de un error denominado \emph{bit flip}.
+En particular, la inyección de un efecto denominado \emph{bit flip}.
 Este se manifiesta como el cambio del valor de un bit en un registro o memoria.
-En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros, estos representan los huecos y electrones generados por el efecto Compton \citep{BOOK:comptom} y fotoeléctrico.
+En la esquina inferior izquierda de la figura se pueden observar círculos grises claros y oscuros, estos representan los huecos y electrones generados por el efecto Compton \citep{BOOK:comptom}.
 La línea punteada oblicua representa la traza generada al perturbar los electrones de las uniones covalentes del semiconductor.
-Esta traza genera perturbaciones en las junturas y logra disparar las compuertas de los transistores.
+Esta traza genera cambios en los campos eléctricos internos y altera los estados de conducción del dispositivo.
 Luego, la activación de los transistores cambian los niveles de tensión en las señales de datos y control.
 Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./Figures/vientosolar.jpg}
-    \caption{Capas magnéticas de la tierra y viento solar\protect\footnotemark.}
+    \caption{Capas magnéticas de la tierra y fulguración solar\protect\footnotemark.}
 	\label{fig:viento}
 \end{figure}
 
 \footnotetext{Imagen tomada del artículo \emph{Structure of space radiation} \citep{WEBSITE:structure_space_radiation}.}
+
+\begin{table}[h]
+	\centering
+	\caption[Efectos de la radiación cósmica]{Efectos producidos por la radiación cósmica \citep{WEBSITE:structure_space_radiation}.}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{Evento}             & \textbf{Acrónimo} & \textbf{Efecto}\\
+		\midrule
+        \emph{Latch-up}             & SEL               & Pico de corriente destructivo\\		
+        \emph{Upset}                & SEU               & Alteración de datos\\
+        \emph{Funtional Interrupt}  & SEFI              & Cambios en la configuración\\
+        \emph{Transient}            & SET               & Pico de tensión\\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:radiacion}
+\end{table}
+
+\newpage
 
 \begin{figure}[htbp]
 	\centering
@@ -104,25 +130,6 @@ Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
 \end{figure}
 
 \footnotetext{Imagen tomada del artículo \emph{Effects of space radiation on electronic devices} \citep{WEBSITE:effects_on_devices}.}
-
-\begin{table}[h]
-	\centering
-	\caption[Efectos de la radiación cósmica]{Efectos producidos por la radiación cósmica \citep{WEBSITE:structure_space_radiation}.}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Evento}             & \textbf{Acrónimo} & \textbf{Efecto}\\
-		\midrule
-        \emph{Latch-up}             & SEL               & Pico de corriente\\		
-        \emph{Upset}                & SEU               & Alteración de datos\\
-        \emph{Funtional Interrupt}  & SEFI              & Cambios en la configuración\\
-        \emph{Transient}            & SET               & Pico de tensión\\
-        \emph{Burnout}              & SEB               & Activación de transistores parásitos\\
-        \emph{Gate Rapture}         & SEGR              & Generación de plasma de alta densidad\\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:radiacion}
-\end{table}
 
 \section{Calificación espacial e iniciativa \emph{New Space}}
 \label{sec:newspace}
@@ -136,11 +143,10 @@ La irrupción del sector privado vista en la sección \ref{sec:1space}, trajo un
 Esta iniciativa busca bajar los costos al utilizar componentes no calificados para su uso espacial.
 Además, existe la ventaja adicional de introducir tecnología de vanguardia.
 
-
 El caso de Starlink es un ejemplo de \emph{New Space} particular.
 Su volumen de satélites lanzados permite realizar conclusiones estadísticas significativas.
-En particular, su poca capacidad para cumplir sus objetivos si se mantiene la actual tasa de mortalidad de sus satélites \citep{ARTICLE:cibils}.
-En la figura \ref{fig:starlinkdeath} se puede observar que la constelación no logrará alcanzar la población deseada.
+En particular, la presente dificultad para cumplir sus objetivos si se mantiene la actual tasa de mortalidad de sus satélites \citep{ARTICLE:cibils}.
+En la figura \ref{fig:starlinkdeath} se puede observar que la constelación no lograría alcanzar la población deseada.
  
 Al problema de población de Starlink se suma la gran cantidad de polución generada.
 Los satélites fuera de servicio no pueden ser desorbitados y persisten en forma de \emph{debris}.
@@ -190,11 +196,11 @@ El uso de dispositivos sin calificación espacial hace que los riesgos frente a 
 Además, la aplicación final de vuelo no suele estar disponible durante la fase de desarrollo de los proyectos.
 Esto dificulta aún más la mitigación de errores y aumenta la vulnerabilidad de los sistemas.
 
-La manera tradicional de evaluar las técnicas de mitigación de errores es realizar un ensayo por radiación.
+La manera tradicional de evaluar la toleracia a los de errores de \emph{software} es realizar un ensayo por radiación.
 En estos ensayos se utilizan instalaciones en tierra para pruebas de radiación.
 Sin embargo, estas instalaciones son costosas y la preparación y ejecución de los ensayos consumen mucho tiempo.
 
-Para lograr un ensayo por radiación, las instalaciones deben producir un rayo de partículas cargadas.
+Para lograr un ensayo por radiación, las instalaciones deben producir un haz de partículas cargadas.
 Estas partículas se pueden obtener de:
 \begin{itemize}
     \item Aceleradores de partículas: en esta categoría se incluyen ciclotrones y aceleradores lineales.
@@ -228,21 +234,19 @@ La sección trasversal de un programa se puede definir entonces como:
     \sigma_{(SEU)} = \sum{d(R_i) \times \sigma_{R_i}}
 \end{equation}
 
-\newpage
-
 Donde:
 \begin{itemize}
     \item $ d(R_i) $ es el ciclo de trabajo del elemento de memoria $ R $.
     \item $ \sigma_{R_i} $ es la sección trasversal de memoria obtenida por la metodología estática \citep{ARTICLE:velazco}.
 \end{itemize}
 
-Diseñar un ensayo dinámico por radiación es un proceso largo y costoso, demanda personal capacitado e instalaciones específicas.
-Además, la electrónica de vuelo no suele estar presente durante el desarrollo del proyecto.
-Finalmente, este método no permite un control preciso del ensayo.
+Diseñar un ensayo dinámico por radiación es un proceso largo y costoso, esto demanda que se distribuya la inversión de capital entre varias misiones.
+Como consecuencia, el ensayo se realiza con un \emph{brenchmark} que no representa realmente la aplicación de vuelo.
+Finalmente, al ejecutar un ensayo genérico se obtiene un número mayor de \emph{soft-errors}.
 
-Otra técnica disponible son los ensayos basados en \emph{software}, cuyo método se basa en introducir instrucciones espúreas que generen errores.
-Esto genera la problemática de estimar la tasa de error.
-Con esta tasa se puede determinar en que posiciones del programa corresponde introducir las instrucciones de error.
+Otra técnica disponible son los ensayos basados en \emph{software}, cuyo método se basa en emular la arquitectura a evaluar e introducir instrucciones que generen errores.
+Esto genera un consumo de cómputo elevado y la problemática de estimar la tasa de error.
+Con esta tasa se puede determinar en que momentos de la emulación corresponde introducir las instrucciones de error.
 La tasa de error se estima como:
 
 \begin{equation}
@@ -258,8 +262,8 @@ Además, cada vez que se altera el código fuente de la aplicación se necesita 
 Existe una tercera técnica de ensayo de errores transitorios.
 Esta técnica está basada en \emph{hardware}; y en el caso de los microprocesadores, se utiliza una sonda de depuración.
 La principal ventaja de este método frente al basado en \emph{software} es que un mismo ensayo puede ser utilizado para múltiples iteraciones del código fuente.
-Esto es posible al suponer un flujo constante de partículas cargadas, de esta manera, los errores siguen un proceso Poisson homogéneo.
-Luego, el intervalo de tiempo entre dos errores transitorios expresa una distribución exponencial.
+Esto se debe a que la tasa de ocurrencia de los eventos nucleares sigue un proceso Poisson.
+Si se observa el proceso como el tiempo que tarda en producirse cada impacto de una partícula cargada, entonces el proceso sigue una distribución exponencial.
 Este razonamiento está sustentado en la siguiente ecuación:
 
 \begin{equation}
@@ -287,8 +291,6 @@ Los métodos mencionados presentan compromisos de ingeniería y están resumidos
 	\label{tab:arte}
 \end{table}
 
-\newpage
-
 \section{Alcance del trabajo}
 \label{sec:alcance}
 
@@ -306,7 +308,7 @@ En la figura \ref{fig:dutsimple} se puede observar un diagrama en bloques simpli
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./Figures/dutsimple.pdf}
+	\includegraphics[width=\textwidth]{./Figures/dutsimple.pdf}
     \caption{Diagrama simplificado del dispositivo bajo prueba.}
 	\label{fig:dutsimple}
 \end{figure}
@@ -316,7 +318,7 @@ En la figura \ref{fig:sisesimple} se puede ver como interactúan las partes del 
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./Figures/sisesimple.pdf}
+	\includegraphics[width=\textwidth]{./Figures/sisesimple.pdf}
     \caption{Diagrama simplificado del sistema de inyección de errores.}
 	\label{fig:sisesimple}
 \end{figure}
