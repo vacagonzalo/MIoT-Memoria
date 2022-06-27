@@ -84,14 +84,14 @@ Los permanentes se deben a la destrucción de una parte del circuito.
 Esta destrucción es producto del disparo de componentes activos parásitos \citep{WEBSITE:effects_on_devices}.
 Finalmente, en la tabla \ref{tab:radiacion} se puede ver un resumen de los tipos de errores generados por la radiación cósmica que de forma conjunta se denominan \emph{Single Event Effects (SEE)}.
 
-Los cambios transitorios de estados internos de la electrónica dan lugar a lo que se denomina como \emph{soft-errors}, y son el objeto de estudio de este trabajo.
-En la figura \ref{fig:bitflip} se puede ver el efecto transitorio de la radiación sobre los transistores de un integrado.
-En particular, la inyección de un efecto denominado \emph{bit flip}.
-Este se manifiesta como el cambio del valor de un bit en un registro o memoria.
-La imagen muestra la colisión de una partícula cargada que excita e ioniza al semiconductor.
-La línea punteada oblicua representa la traza de excitación que genera cambios en los campos eléctricos internos y altera los estados de conducción del dispositivo.
-Luego, la activación de los transistores cambian los niveles de tensión en las señales de datos y control.
-Finalmente, el circuito se normaliza pero con valores invertidos de tensión.
+La interacción de una partícula de radiación con el semiconductor genera portadores de carga eléctrica.
+Estos portadores se manifiestan como electrones y huecos a lo largo de su trayectoria.
+Inmediatamente, son separados por los campos eléctricos internos antes de que se produzca su recombinación.
+Esto altera la distribución de carga interna y los campos eléctricos asociados.
+En determinadas circunstancias este efecto produce el cambio de un estado lógico dentro del dispositivo.
+Ese cambio puede ser permanente y afectar un dato o una configuración interna.
+Ese efecto se denomina \emph{soft-error} y es el objeto de estudio de este trabajo.
+En la figura \ref{fig:bitflip} se puede observar ese efecto sobre una celda de memoria básica.
 
 \begin{figure}[htbp]
 	\centering
